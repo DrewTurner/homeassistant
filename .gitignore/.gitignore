@@ -1,3 +1,8 @@
 secrets.yaml
 nest.conf
 known_devices.yaml
+OZW_Log.txt
+*.db
+*.log
+*.sqlite
+zw*.xml
