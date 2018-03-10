@@ -6,3 +6,4 @@ OZW_Log.txt
 *.log
 *.sqlite
 zw*.xml
+shouldignore.txt
