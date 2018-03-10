@@ -1,0 +1,17 @@
+- id: outside_lights_turnon
+  alias: outside_lights_turnon
+  trigger:
+  - event: sunset
+    offset: -00:10:00
+    platform: sun
+  action:
+  - entity_id: scene.eveninglightturnon
+    service: scene.turn_on
+- id: outside_lights_turnoff
+  alias: outside_lights_turnoff
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: homeassistant.turn_off
+    entity_id: light.outside_lights_1_level
