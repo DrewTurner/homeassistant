@@ -18,7 +18,7 @@ homeassistant:
 ios:
 
 #setup a notify app
-#dt 1/1/2018  
+#dt 1/1/2018
 notify:
  - platform: ios
    name: iOSApp
