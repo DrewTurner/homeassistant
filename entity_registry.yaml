@@ -1,0 +1,81 @@
+climate.hallway_nest:
+  platform: nest
+  unique_id: pSu0kml2WiQ712lpESOeNtQnFvr4nIt7
+sensor.foehammer_battery_level:
+  platform: ios
+  unique_id: level_foehammer
+sensor.foehammer_battery_state:
+  platform: ios
+  unique_id: state_foehammer
+binary_sensor.front_door_sensor:
+  platform: zwave
+  unique_id: 3-72057594093240320
+sensor.front_door_alarm_type:
+  platform: zwave
+  unique_id: 3-72057594094305281
+sensor.front_door_alarm_level:
+  platform: zwave
+  unique_id: 3-72057594094305297
+sensor.front_door_sourcenodeid:
+  platform: zwave
+  unique_id: 3-72057594094305313
+sensor.front_door_access_control:
+  platform: zwave
+  unique_id: 3-72057594094305425
+sensor.front_door_burglar:
+  platform: zwave
+  unique_id: 3-72057594094305441
+binary_sensor.garage_door_sensor:
+  platform: zwave
+  unique_id: 4-72057594110017536
+sensor.garage_door_alarm_type:
+  platform: zwave
+  unique_id: 4-72057594111082497
+sensor.garage_door_alarm_level:
+  platform: zwave
+  unique_id: 4-72057594111082513
+sensor.garage_door_sourcenodeid:
+  platform: zwave
+  unique_id: 4-72057594111082529
+sensor.garage_door_burglar:
+  platform: zwave
+  unique_id: 4-72057594111082657
+binary_sensor.back_door_sensor:
+  platform: zwave
+  unique_id: 5-72057594126794752
+sensor.back_door_alarm_type:
+  platform: zwave
+  unique_id: 5-72057594127859713
+sensor.back_door_alarm_level:
+  platform: zwave
+  unique_id: 5-72057594127859729
+sensor.back_door_sourcenodeid:
+  platform: zwave
+  unique_id: 5-72057594127859745
+sensor.back_door_access_control:
+  platform: zwave
+  unique_id: 5-72057594127859857
+sensor.back_door_burglar:
+  platform: zwave
+  unique_id: 5-72057594127859873
+light.outside_lights_1_level:
+  platform: zwave
+  unique_id: 6-72057594143408129
+sensor.drews_ipad_battery_state:
+  platform: ios
+  unique_id: state_drews_ipad
+sensor.drews_ipad_battery_level:
+  platform: ios
+  unique_id: level_drews_ipad
+sensor.cold__flu_forecasted_average:
+  platform: pollen
+  unique_id: 65010_cold__flu_forecasted_average
+sensor.allergy_index_forecasted_average:
+  platform: pollen
+  unique_id: 65010_allergy_index_forecasted_average
+sensor.allergy_index_today:
+  platform: pollen
+  unique_id: 65010_allergy_index_today
+sensor.allergy_index_yesterday:
+  platform: pollen
+  unique_id: 65010_allergy_index_yesterday

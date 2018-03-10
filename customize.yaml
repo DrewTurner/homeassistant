@@ -1,0 +1,6 @@
+cover.single:
+  device_class: garage
+  friendly_name: Garage
+sensor.salt_level:
+  icon: mdi:water
+  unit_of_measurement: cm

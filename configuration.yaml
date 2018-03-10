@@ -1,0 +1,531 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  # Customization file
+  customize: !include customize.yaml
+
+#setting up ios notifications
+#dt 1/1/2018
+ios:
+
+#setup a notify app
+#dt 1/1/2018
+notify:
+ - platform: ios
+   name: iOSApp
+   target: !secret ios_target_id
+
+  #setting up unifi access
+device_tracker:
+  - platform: unifi
+    host: 192.168.101.35
+    verify_ssl: False
+    username: !secret unifi_username
+    password: !secret unifi_password
+    new_device_defaults:
+      track_new_devices: False
+      hide_if_away: True
+
+  #setting up nvr access
+camera:
+  - platform: uvc
+    nvr: 192.168.101.35
+    key: !secret unifi_video_key
+    password: !secret unifi_video_password
+
+  #setting up nest
+  #dt 12/28/2017
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+
+#setup ring
+#turning off 3/7/2018
+#ring:
+#  username: !secret ring_username
+#  password: !secret ring_password
+
+#setup zwave and secure zwave
+#dt 1/4/2018
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+  polling_interval: 30000
+  device_config:
+    zwave.back_door:
+      polling_intensity: 1
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # force password
+  #dt 12/28/2017
+    api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+  exclude:
+    entities:
+     - sensor.front_door_sourcenodeid
+     - sensor.front_door_burglar
+     - sensor.front_door_alarm_type
+     - sensor.front_door_alarm_level
+     - sensor.garage_door_alarm_type
+     - sensor.garage_door_burglar
+     - sensor.garage_door_sourcenodeid
+     - sensor.pws_alerts
+     - sensor.pws_dewpoint_f
+     - sensor.pws_feelslike_f
+     - sensor.pws_precip_1d_in
+     - sensor.pws_precip_2d_in
+     - sensor.pws_precip_3d_in
+     - sensor.pws_precip_4d_in
+     - sensor.pws_precip_1d
+     - sensor.pws_precip_2d
+     - sensor.pws_precip_3d
+     - sensor.pws_precip_4d
+     - sensor.pws_temp_f
+     - sensor.pws_temp_high_1d_f
+     - sensor.pws_temp_low_1d_f
+     - sensor.pws_weather
+     - sensor.pws_weather_1d
+     - sensor.pws_weather_1n
+     - sensor.pws_weather_2d
+     - sensor.pws_weather_2n
+     - sensor.pws_weather_3d
+     - sensor.pws_weather_3n
+     - sensor.pws_weather_4d
+     - sensor.pws_weather_4n
+     - sensor.back_door_sourcenodeid
+     - sensor.back_door_burglar
+     - sensor.back_door_alarm_type
+     - sensor.back_door_alarm_level
+     - sensor.ring_front_door_battery
+     - sensor.ring_front_door_last_activity
+     - sensor.ring_front_door_last_ding
+     - sensor.ring_front_door_volume
+     - sensor.ring_front_door_wifi_signal_category
+     - sensor.ring_front_door_wifi_signal_strength
+     - binary_sensor.ring_front_door_motion
+     - binary_sensor.ring_front_door_ding
+     - camera.harper
+     - camera.uvc_dome
+     - camera.uvc_g3
+     - zwave.outside_lights_1
+     - zwave.garage_door
+     - zwave.front_door
+     - zwave.back_door
+     - zwave.aeotec_zw090_zstick_gen5_us
+
+# View all events in a logbook
+logbook:
+  exclude:
+    entities:
+     - sensor.front_door_sourcenodeid
+     - sensor.front_door_burglar
+     - sensor.front_door_alarm_type
+     - sensor.front_door_alarm_level
+     - sensor.garage_door_alarm_type
+     - sensor.garage_door_burglar
+     - sensor.garage_door_sourcenodeid
+     - sensor.pws_alerts
+     - sensor.pws_dewpoint_f
+     - sensor.pws_feelslike_f
+     - sensor.pws_precip_1d_in
+     - sensor.pws_precip_2d_in
+     - sensor.pws_precip_3d_in
+     - sensor.pws_precip_4d_in
+     - sensor.pws_precip_1d
+     - sensor.pws_precip_2d
+     - sensor.pws_precip_3d
+     - sensor.pws_precip_4d
+     - sensor.pws_temp_f
+     - sensor.pws_temp_high_1d_f
+     - sensor.pws_temp_low_1d_f
+     - sensor.pws_weather
+     - sensor.pws_weather_1d
+     - sensor.pws_weather_1n
+     - sensor.pws_weather_2d
+     - sensor.pws_weather_2n
+     - sensor.pws_weather_3d
+     - sensor.pws_weather_3n
+     - sensor.pws_weather_4d
+     - sensor.pws_weather_4n
+     - sensor.back_door_sourcenodeid
+     - sensor.back_door_burglar
+     - sensor.back_door_alarm_type
+     - sensor.back_door_alarm_level
+     - sensor.ring_front_door_battery
+     - sensor.ring_front_door_last_activity
+     - sensor.ring_front_door_last_ding
+     - sensor.ring_front_door_volume
+     - sensor.ring_front_door_wifi_signal_category
+     - sensor.ring_front_door_wifi_signal_strength
+     - binary_sensor.ring_front_door_motion
+     - binary_sensor.ring_front_door_ding
+     - camera.harper
+     - camera.uvc_dome
+     - camera.uvc_g3
+     - zwave.outside_lights_1
+     - zwave.garage_door
+     - zwave.front_door
+     - zwave.back_door
+     - zwave.aeotec_zw090_zstick_gen5_us
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+#Sensors
+#Weather prediction
+sensor:
+#stock sensor
+  - platform: alpha_vantage
+    api_key: !secret alpha_vantage_api_key
+    symbols:
+    - symbol: VGT
+      name: Vanguard Information Technology Index Fund
+    - symbol: GOOGL
+      name: Google - Alphabet
+
+#pollen sensor
+  - platform: pollen
+    zip_code: "65010"
+    monitored_conditions:
+      - allergy_average_forecasted
+      - allergy_index_today
+      - allergy_index_yesterday
+      - disease_average_forecasted
+
+#pihole sensor
+  - platform: pi_hole
+    host: 192.168.100.49
+    monitored_conditions:
+      - ads_blocked_today
+      - ads_percentage_today
+      - dns_queries_today
+
+  - platform: yr
+
+#rest sensor for water softener salt level
+  - platform: rest
+    name: Salt Level
+    resource: http://192.168.100.73
+    scan_interval: 300
+
+    #WeatherUnderground
+  - platform: wunderground
+    api_key: !secret wunderground_api_key
+    monitored_conditions:
+      - alerts
+      - dewpoint_f
+      - feelslike_f
+      - precip_1d_in
+      - precip_2d_in
+      - precip_3d_in
+      - precip_4d_in
+      - precip_1d
+      - precip_2d
+      - precip_3d
+      - precip_4d
+      - temp_f
+      - temp_high_1d_f
+      - temp_low_1d_f
+      - weather
+      - weather_1d
+      - weather_1n
+      - weather_2d
+      - weather_2n
+      - weather_3d
+      - weather_3n
+      - weather_4d
+      - weather_4n
+
+#speedtest
+  - platform: speedtest
+    minute:
+      - 0
+      - 30
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+  
+#dynamically change icons
+  - platform: template
+    sensors:
+      home_garage_door:
+        friendly_name: "Home Garage Door"
+        value_template: >-
+          {% if is_state('sensor.garage_door_alarm_level', '255') %}
+            Open
+          {% else %}
+            Closed
+          {% endif %}        
+        icon_template: >-
+          {% if is_state('sensor.garage_door_alarm_level', '255') %}
+            mdi:garage-open
+          {% else %}
+            mdi:garage
+          {% endif %}
+  - platform: template
+    sensors:
+      front_door:
+        friendly_name: "Front Door"
+        value_template: >-
+          {% if is_state('sensor.front_door_access_control', '23') %}
+            Closed
+          {% else %}
+            Open
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.front_door_access_control', '23') %}
+            mdi:door-closed
+          {% else %}
+            mdi:door-open
+          {% endif %}
+  - platform: template
+    sensors:
+      basement_door:
+        friendly_name: "Basement Door"
+        value_template: >-
+          {% if is_state('sensor.back_door_access_control', '23') %}
+            Closed
+          {% else %}
+            Open
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.back_door_access_control', '23') %}
+            mdi:door-closed
+          {% else %}
+            mdi:door-open
+          {% endif %}
+
+#ring platform
+  - platform: ring
+
+# Text to speech
+tts:
+  - platform: google
+
+#binary ring sensor
+binary_sensor:
+  - platform: ring
+
+##homesystemmonitors
+#sensor for loadbalancer
+  - platform: ping
+    host: 192.168.101.23
+    name: Loadbalancer
+
+#sensor for challenger
+  - platform: ping
+    host: 192.168.101.13
+    name: Challenger
+
+#sensor for ubiquiticontroller
+  - platform: ping
+    host: 192.168.101.35
+    name: UbiquitiController
+
+#salt water level above or below threshold.
+  - platform: threshold
+    entity_id: sensor.salt_level
+    type: upper
+    threshold: 28
+    name: "Salt Level Threshold"
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+#setup notifications
+#dt 1/1/2018
+#alert if back door has been opened
+alert:
+  basement_back_door:
+    name: Basement Backdoor is open
+    done_message: Basement Backdoor was shut
+    entity_id: sensor.back_door_access_control
+    state: '22'
+    repeat: 1
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+
+#alert if front door has been opened
+  front_door:
+    name: Front Door is Open
+    done_message: Front Door was shut
+    entity_id: sensor.front_door_access_control
+    state: '22'
+    repeat: 1
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+
+#alerts if garage door has been open for more than 5 minutes.
+  garage_door:
+    name: Garage Door is Open
+    done_message: Garage Door was shut
+    entity_id: sensor.garage_door_alarm_level
+    state: '255'
+    repeat: 5
+    can_acknowledge: True
+    skip_first: True
+    notifiers:
+      - iosapp
+
+#alert if salt needs to be replenished      
+  replenish_salt:
+    name: Replenish Salt
+    done_message: Salt Level is Normal
+    entity_id: binary_sensor.salt_level_threshold
+    state: 'on'
+    repeat: 1440
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+
+#alert if loadbalancer goes down
+  loadbalancerisdown:
+    name: Loadbalancer is Down
+    done_message: Loadbalancer is Up
+    entity_id: binary_sensor.loadbalancer
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+
+#alert if challenger goes down
+  challengerisdown:
+    name: challenger is Down
+    done_message: challenger is Up
+    entity_id: binary_sensor.challenger
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
+      - iosapp      
+
+#alert if loadbalancer goes down
+  ubiquiticontrollerisdown:
+    name: ubiquiticontroller is Down
+    done_message: ubiquiticontroller is Up
+    entity_id: binary_sensor.ubiquiticontroller
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+
+#turn the outside lights on during evening to 50%
+scene:
+  name: eveninglightturnon
+  entities:
+    light.outside_lights_1_level:
+      state: on
+      brightness_pct: 50
+
+#enable mqtt broker
+mqtt:
+
+#Cover to control garage door
+cover:
+  - platform: mqtt
+    name: "single"
+    state_topic: "sensor/garage/state1"
+    command_topic: "sensor/garage/action1"
+    payload_open: "OPEN"
+    payload_close: "OPEN"
+    payload_stop: "OPEN"
+    state_open: "open"
+    state_closed: "closed"
+    optomistic: false
+    retain: true
+
+  - platform: mqtt
+    name: "mqtttester"
+    state_topic: "outTopic"
+    username: homeassistant
+    password: !secret http_password
+    command_topic: "inTopic"
+    payload_open: "1"
+    payload_close: "0"
+    state_open: "on"
+    state_closed: "off"
+    optimistic: false
+    retain: true
+#this dynamically assigns value and icon templates to the garage door.
+#control is in the mqtt single cover.  Icon is decided by sensor.garage_door_alarm_level
+  - platform: template
+    covers:
+      garagedoorcontrol:
+        friendly_name: "Garage Door"
+        value_template: >-
+          {% if is_state('sensor.garage_door_alarm_level', '255') %}
+            Open
+          {% else %}
+            Closed
+          {% endif %}        
+        icon_template: >-
+          {% if is_state('sensor.garage_door_alarm_level', '255') %}
+            mdi:garage-open
+          {% else %}
+            mdi:garage
+          {% endif %}
+        open_cover:
+          service: cover.open_cover
+          data:
+            entity_id: cover.single
+        stop_cover:
+          service: cover.stop_cover
+          data:
+            entity_id: cover.single
+        close_cover:
+          service: cover.close_cover
+          data:
+            entity_id: cover.single
+#logger:
+#  default: warning
+#  logs:
+#    homeassistant.components.mqtt: debug
