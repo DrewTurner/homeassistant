@@ -1,3 +1,0 @@
-this file should be ignored.
-
-please don't upload this.
