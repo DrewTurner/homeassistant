@@ -1,5 +1,4 @@
 ########VIEWS
-#changeview
   home:
     view: yes
     name: TurnerHome
@@ -9,12 +8,6 @@
       - group.outsidelights
       - device_tracker.foehammer
       - device_tracker.lindseysiphone3
-
-  cameras_view:
-    view: yes
-    name: Cameras
-    entities:
-      - group.cameras
 
   weather_view:
     view: yes
@@ -34,6 +27,12 @@
     name: Stocks
     entities:
       - group.stocks
+
+  cameras_view:
+    view: yes
+    name: Cameras
+    entities:
+      - group.cameras
 
   garage_door:
     name: Garage Doors
@@ -106,3 +105,6 @@
     entities:
       - sensor.vanguard_information_technology_index_fund
       - sensor.google__alphabet
+      - sensor.dow_jones_industrial_average
+      - sensor.nasdaq_composite
+      - sensor.sp_500_index
