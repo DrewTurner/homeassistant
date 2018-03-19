@@ -222,6 +222,12 @@ sensor:
       name: Vanguard Information Technology Index Fund
     - symbol: GOOGL
       name: Google - Alphabet
+    - symbol: DJI
+      name: Dow Jones Industrial Average
+    - symbol: INX
+      name: S&P 500 Index
+    - symbol: IXIC
+      name: Nasdaq Composite
 
 #pollen sensor
   - platform: pollen
