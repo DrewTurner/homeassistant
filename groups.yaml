@@ -13,6 +13,9 @@
     view: yes
     name: Weather
     entities:
+      - group.temperature
+      - group.precipitation
+      - group.allergy
       - group.weather
 
   system_monitor_view:
@@ -21,6 +24,8 @@
     entities:
       - group.systemmonitoring
       - group.pihole
+      - group.battery
+      - group.internet
   
   stocks_view:
     view: yes
@@ -49,6 +54,7 @@
       - sensor.front_door
       - sensor.basement_door
       - cover.garagedoorcontrol
+      - sensor.ring_front_door_last_activity
   environment:
     name: Environment
     entities:
@@ -64,16 +70,18 @@
       - camera.harper
       - camera.uvc_dome
       - camera.g3
-  weather:
-    name: Weather
+  temperature:
+    name: Temperature
     entities:
       - sensor.pws_temp_f
       - sensor.pws_feelslike_f
       - sensor.pws_temp_high_1d_f
       - sensor.pws_temp_low_1d_f
       - sensor.pws_alerts
-      - sensor.pws_precip_1d
-      - sensor.pws_precip_2d
+
+  weather:
+    name: Weather
+    entities:
       - sensor.pws_weather_1d
       - sensor.pws_weather_1n
       - sensor.pws_weather_2d
@@ -82,12 +90,24 @@
       - sensor.pws_weather_3n
       - sensor.pws_weather_4d
       - sensor.pws_weather_4n
+  precipitation:
+    name: Precipitation
+    entities:
+      - sensor.pws_precip_1d
+      - sensor.pws_precip_2d
       - sensor.pws_precip_3d
       - sensor.pws_precip_4d
       - sensor.pws_precip_1d_in
       - sensor.pws_precip_2d_in
       - sensor.pws_precip_3d_in
       - sensor.pws_precip_4d_in
+  allergy:
+    name: Allergy
+    entities:
+      - sensor.allergy_index_today
+      - sensor.allergy_index_yesterday
+      - sensor.cold__flu_forecasted_average
+
   systemmonitoring:
     name: System Monitor
     entities:
@@ -108,3 +128,15 @@
       - sensor.dow_jones_industrial_average
       - sensor.nasdaq_composite
       - sensor.sp_500_index
+  battery:
+    name: Battery Levels
+    entities:
+      - sensor.foehammer_battery_level
+      - sensor.drews_ipad_battery_level
+      - sensor.ring_front_door_battery
+  internet:
+    name: Internet
+    entities:
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.speedtest_ping
