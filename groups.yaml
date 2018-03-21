@@ -7,7 +7,6 @@
       - group.environment
       - group.outsidelights
       - device_tracker.foehammer
-      - device_tracker.lindseysiphone3
 
   weather_view:
     view: yes
