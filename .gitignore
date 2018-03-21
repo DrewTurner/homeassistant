@@ -7,3 +7,4 @@ OZW_Log.txt
 *.sqlite
 zw*.xml
 shouldignore.txt
+entity_registry.yaml
