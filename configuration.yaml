@@ -341,6 +341,25 @@ sensor:
           {% else %}
             mdi:door-open
           {% endif %}
+          
+  - platform: template
+    sensors:
+      front_door_battery:
+        friendly_name: 'Front Door Battery Level'
+        value_template: '{{ states.sensor.zwave.front_door.attributes.battery_level }}'
+        unit_of_measurement: '%'
+  - platform: template
+    sensors:
+      front_door_battery:
+        friendly_name: 'Back Door Battery Level' 
+        value_template: '{{ states.sensor.zwave.back_door.attributes.battery_level }}' 
+        unit_of_measurement: '%'
+  - platform: template
+    sensors:
+      front_door_battery:
+        friendly_name: 'Garage Door Battery Level'
+        value_template: '{{ states.sensor.zwave.garage_door.attributes.battery_level }}'
+        unit_of_measurement: '%'          
 
 #ring platform
   - platform: ring
