@@ -372,6 +372,12 @@ tts:
 binary_sensor:
   - platform: ring
 
+#salt water level above or below threshold.
+  - platform: threshold
+    entity_id: sensor.salt_level
+    upper: 30
+    name: "Salt Level Threshold"
+
 ##homesystemmonitors
 #sensor for loadbalancer
   - platform: ping
@@ -387,13 +393,6 @@ binary_sensor:
   - platform: ping
     host: 192.168.101.35
     name: UbiquitiController
-
-#salt water level above or below threshold.
-  - platform: threshold
-    entity_id: sensor.salt_level
-    type: upper
-    threshold: 28
-    name: "Salt Level Threshold"
 
 # Cloud
 cloud:
