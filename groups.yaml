@@ -116,6 +116,9 @@
       - binary_sensor.challenger
       - binary_sensor.ubiquiticontroller
       - binary_sensor.loadbalancer
+      - binary_sensor.wemos_freezer
+      - binary_sensor.wemos_salt
+
   pihole:
     name: pihole
     entities:
