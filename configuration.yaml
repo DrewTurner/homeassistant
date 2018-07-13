@@ -414,6 +414,16 @@ binary_sensor:
   - platform: ping
     host: 192.168.101.35
     name: UbiquitiController
+    
+#sensor for freezer wemos
+  - platform: ping
+    host: 192.168.100.61
+    name: wemos_freezer
+
+#sensor for salt wemos
+  - platform: ping
+    host: 192.168.100.73
+    name: wemos_salt
 
 # Cloud
 cloud:
@@ -513,6 +523,28 @@ alert:
     can_acknowledge: True
     notifiers:
       - iosapp
+      
+#alert if freezer wemos goes down
+  wemos_freezer_down:
+    name: wemos_freezer is Down
+    done_message: wemos_freezer is Up
+    entity_id: binary_sensor.wemos_freezer
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+      
+#alert if loadbalancer goes down
+  wemos_salt_isdown:
+    name: wemos_salt is Down
+    done_message: wemos_salt is Up
+    entity_id: binary_sensor.wemos_salt
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
+      - iosapp      
 
 #turn the outside lights on during evening to 50%
 scene:
