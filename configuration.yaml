@@ -214,6 +214,21 @@ sun:
 #Sensors
 #Weather prediction
 sensor:
+
+#temp and humidity
+  - platform: mqtt
+    name: 'Freezer Temperature'
+    state_topic: 'sensor/temperature'
+    qos: 0
+    unit_of_measurement: "ºC"
+
+  - platform: mqtt
+    name: 'Freezer Humidity'
+    state_topic: 'sensor/humidity'
+    qos: 0
+    unit_of_measurement: "%"
+    
+    
 #stock sensor
   - platform: alpha_vantage
     api_key: !secret alpha_vantage_api_key
