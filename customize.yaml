@@ -4,3 +4,9 @@ cover.single:
 sensor.salt_level:
   icon: mdi:water
   unit_of_measurement: cm
+sensor.home_security_state:
+  hidden: true
+sensor.freezer_temperature:
+  icon: mdi:thermometer
+sensor.freezer_humidity:
+  icon: mdi:thermometer
