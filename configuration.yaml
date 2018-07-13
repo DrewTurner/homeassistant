@@ -392,6 +392,12 @@ binary_sensor:
     entity_id: sensor.salt_level
     upper: 30
     name: "Salt Level Threshold"
+    
+#freezer temp above threshold
+  - platform: threshold
+    entity_id: sensor.freezer_temperature
+    upper: 20
+    name: "Freezer Temp Threshold"
 
 ##homesystemmonitors
 #sensor for loadbalancer
@@ -463,6 +469,17 @@ alert:
     can_acknowledge: True
     notifiers:
       - iosapp
+      
+#alert if freezer is not working      
+  freezer_temp_alert:
+    name: Freezer Temp Alert
+    done_message: Freezer Temp is Ok
+    entity_id: binary_sensor.freezer_temp_threshold
+    state: 'on'
+    repeat: 15
+    can_acknowledge: True
+    notifiers:
+      - iosapp      
 
 #alert if loadbalancer goes down
   loadbalancerisdown:
