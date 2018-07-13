@@ -7,6 +7,7 @@
       - group.environment
       - group.outsidelights
       - device_tracker.foehammer
+      - device_tracker.lindseysiphone3
 
   weather_view:
     view: yes
@@ -59,6 +60,8 @@
     entities:
       - climate.hallway_nest
       - sensor.salt_level
+      - sensor.freezer_temperature
+      - sensor.freezer_humidity
   outsidelights:
     name: Outside Lights
     entities:
@@ -133,6 +136,9 @@
       - sensor.foehammer_battery_level
       - sensor.drews_ipad_battery_level
       - sensor.ring_front_door_battery
+      - sensor.garage_door_battery
+      - sensor.front_door_battery
+      - sensor.back_door_battery
   internet:
     name: Internet
     entities:
