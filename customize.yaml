@@ -10,3 +10,7 @@ sensor.freezer_temperature:
   icon: mdi:thermometer
 sensor.freezer_humidity:
   icon: mdi:thermometer
+sensor.hg_humidity:
+  icon: mdi:thermometer
+sensor.hg_temperature:
+  icon: mdi:thermometer

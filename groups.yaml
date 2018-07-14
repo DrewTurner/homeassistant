@@ -5,7 +5,7 @@
     entities:
       - group.security
       - group.environment
-      - group.outsidelights
+      - group.lights
       - device_tracker.foehammer
       - device_tracker.lindseysiphone3
 
@@ -62,8 +62,10 @@
       - sensor.salt_level
       - sensor.freezer_temperature
       - sensor.freezer_humidity
-  outsidelights:
-    name: Outside Lights
+      - sensor.hg_humidity
+      - sensor.hg_temperature
+  lights:
+    name: Lights
     entities:
       - light.outside_lights_1_level
   cameras:

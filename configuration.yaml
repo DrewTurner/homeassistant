@@ -36,6 +36,7 @@ device_tracker:
       hide_if_away: True
 
   #setting up nvr access
+#DT5/24/2018 - removed to troubleshoot hassionot starting
 camera:
   - platform: uvc
     nvr: 192.168.101.35
@@ -47,12 +48,18 @@ camera:
 nest:
   client_id: !secret nest_client_id
   client_secret: !secret nest_client_secret
+  sensors:
+    monitored_conditions:
+      - 'temperature'
+      - 'target'
+      - 'humidity'
+      - 'operation_mode'
+      - 'hvac_state'
 
 #setup ring
-#turning off 3/7/2018
-#ring:
-#  username: !secret ring_username
-#  password: !secret ring_password
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
 
 #setup zwave and secure zwave
 #dt 1/4/2018
@@ -227,8 +234,19 @@ sensor:
     state_topic: 'sensor/humidity'
     qos: 0
     unit_of_measurement: "%"
-    
-    
+
+  - platform: mqtt
+    name: 'H&G Temperature'
+    state_topic: 'home/girls/temperature'
+    qos: 0
+    unit_of_measurement: "ºC"
+
+  - platform: mqtt
+    name: 'H&G Humidity'
+    state_topic: 'home/girls/humidity'
+    qos: 0
+    unit_of_measurement: "%"    
+
 #stock sensor
   - platform: alpha_vantage
     api_key: !secret alpha_vantage_api_key
@@ -243,6 +261,7 @@ sensor:
       name: S&P 500 Index
     - symbol: IXIC
       name: Nasdaq Composite
+
 
 #pollen sensor
   - platform: pollen
@@ -269,7 +288,7 @@ sensor:
     resource: http://192.168.100.73
     scan_interval: 300
 
-    #WeatherUnderground
+#WeatherUnderground
   - platform: wunderground
     api_key: !secret wunderground_api_key
     monitored_conditions:
@@ -298,14 +317,15 @@ sensor:
       - weather_4n
 
 #speedtest
-  - platform: speedtest
-    minute:
-      - 0
-      - 30
-    monitored_conditions:
-      - ping
-      - download
-      - upload
+#DT - 5/25/2018 disabled to see if running in vm is better.
+#  - platform: speedtest
+#    minute:
+#      - 0
+#      - 30
+#    monitored_conditions:
+#      - ping
+#      - download
+#      - upload
   
 #dynamically change icons
   - platform: template
@@ -356,7 +376,7 @@ sensor:
           {% else %}
             mdi:door-open
           {% endif %}
-          
+
   - platform: template
     sensors:
       front_door_battery:
@@ -374,7 +394,7 @@ sensor:
       garage_door_battery:
         friendly_name: 'Garage Door Battery Level'
         value_template: '{{ states.zwave.garage_door.attributes.battery_level }}'
-        unit_of_measurement: '%'      
+        unit_of_measurement: '%'
 
 #ring platform
   - platform: ring
@@ -392,7 +412,7 @@ binary_sensor:
     entity_id: sensor.salt_level
     upper: 30
     name: "Salt Level Threshold"
-    
+
 #freezer temp above threshold
   - platform: threshold
     entity_id: sensor.freezer_temperature
@@ -414,7 +434,7 @@ binary_sensor:
   - platform: ping
     host: 192.168.101.35
     name: UbiquitiController
-    
+
 #sensor for freezer wemos
   - platform: ping
     host: 192.168.100.61
@@ -463,9 +483,8 @@ alert:
     done_message: Garage Door was shut
     entity_id: sensor.garage_door_alarm_level
     state: '255'
-    repeat: 5
+    repeat: 60
     can_acknowledge: True
-    skip_first: True
     notifiers:
       - iosapp
 
@@ -479,17 +498,17 @@ alert:
     can_acknowledge: True
     notifiers:
       - iosapp
-      
+
 #alert if freezer is not working      
-  freezer_temp_alert:
-    name: Freezer Temp Alert
-    done_message: Freezer Temp is Ok
-    entity_id: binary_sensor.freezer_temp_threshold
-    state: 'on'
-    repeat: 15
-    can_acknowledge: True
-    notifiers:
-      - iosapp      
+#  freezer_temp_alert:
+#    name: Freezer Temp Alert
+#    done_message: Freezer Temp is Ok
+#    entity_id: binary_sensor.freezer_temp_threshold
+#    state: 'on'
+#    repeat: 15
+#    can_acknowledge: True
+#    notifiers:
+#      - iosapp 
 
 #alert if loadbalancer goes down
   loadbalancerisdown:
@@ -523,7 +542,7 @@ alert:
     can_acknowledge: True
     notifiers:
       - iosapp
-      
+
 #alert if freezer wemos goes down
   wemos_freezer_down:
     name: wemos_freezer is Down
@@ -544,7 +563,7 @@ alert:
     repeat: 240
     can_acknowledge: True
     notifiers:
-      - iosapp      
+      - iosapp     
 
 #turn the outside lights on during evening to 50%
 scene:
