@@ -26,6 +26,7 @@
       - group.pihole
       - group.battery
       - group.internet
+      - group.homeassistantsystemmonitor
   
   stocks_view:
     view: yes
@@ -127,6 +128,13 @@
       - sensor.pihole_ads_blocked_today
       - sensor.pihole_ads_percentage_blocked_today
       - sensor.pihole_dns_queries_today
+      - sensor.pihole_domains_blocked
+      - sensor.pihole_dns_queries_cached
+      - sensor.pihole_dns_queries_forwarded
+      - sensor.pihole_dns_unique_clients
+      - sensor.pihole_dns_unique_domains
+      - sensor.pihole_seen_clients
+
   stocks:
     name: Stocks
     entities:
@@ -150,3 +158,13 @@
       - sensor.speedtest_download
       - sensor.speedtest_upload
       - sensor.speedtest_ping
+  homeassistantsystemmonitor:
+    name: HASS Monitor
+    entities:
+      - sensor.memory_free
+      - sensor.processor_use
+      - sensor.disk_use_percent_home
+      - sensor.last_boot
+      - sensor.load_1m
+      - sensor.load_5m
+      - sensor.load_15m

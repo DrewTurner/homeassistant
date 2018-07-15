@@ -222,6 +222,18 @@ sun:
 #Weather prediction
 sensor:
 
+#homeassistant platform monitor
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+      - type: processor_use
+      - type: last_boot
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+
 #temp and humidity
   - platform: mqtt
     name: 'Freezer Temperature'
@@ -284,7 +296,7 @@ sensor:
       - queries_forwarded
       - unique_clients
       - unique_domains
-      - clients_ever_seen      
+      - clients_ever_seen
 
   - platform: yr
 
