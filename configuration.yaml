@@ -237,13 +237,13 @@ sensor:
 #temp and humidity
   - platform: mqtt
     name: 'Freezer Temperature'
-    state_topic: 'sensor/temperature'
+    state_topic: 'home/freezer/temperature'
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "ºF"
 
   - platform: mqtt
     name: 'Freezer Humidity'
-    state_topic: 'sensor/humidity'
+    state_topic: 'home/freezer/humidity'
     qos: 0
     unit_of_measurement: "%"
 
@@ -251,7 +251,7 @@ sensor:
     name: 'H&G Temperature'
     state_topic: 'home/girls/temperature'
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "ºF"
 
   - platform: mqtt
     name: 'H&G Humidity'
