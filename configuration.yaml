@@ -336,14 +336,14 @@ sensor:
 
 #speedtest
 #DT - 5/25/2018 disabled to see if running in vm is better.
-#  - platform: speedtest
-#    minute:
-#      - 0
-#      - 30
-#    monitored_conditions:
-#      - ping
-#      - download
-#      - upload
+  - platform: speedtest
+    minute:
+      - 0
+      - 30
+    monitored_conditions:
+      - ping
+      - download
+      - upload
   
 #dynamically change icons
   - platform: template
