@@ -286,7 +286,7 @@ sensor:
 
 #pihole sensor
   - platform: pi_hole
-    host: 192.168.100.49
+    host: 192.168.101.38
     monitored_conditions:
       - ads_blocked_today
       - ads_percentage_today
@@ -335,7 +335,6 @@ sensor:
       - weather_4n
 
 #speedtest
-#DT - 5/25/2018 disabled to see if running in vm is better.
   - platform: speedtest
     minute:
       - 0
@@ -434,7 +433,7 @@ binary_sensor:
 #freezer temp above threshold
   - platform: threshold
     entity_id: sensor.freezer_temperature
-    upper: 20
+    upper: 5
     name: "Freezer Temp Threshold"
 
 ##homesystemmonitors
@@ -518,15 +517,15 @@ alert:
       - iosapp
 
 #alert if freezer is not working      
-#  freezer_temp_alert:
-#    name: Freezer Temp Alert
-#    done_message: Freezer Temp is Ok
-#    entity_id: binary_sensor.freezer_temp_threshold
-#    state: 'on'
-#    repeat: 15
-#    can_acknowledge: True
-#    notifiers:
-#      - iosapp 
+  freezer_temp_alert:
+    name: Freezer Temp Alert
+    done_message: Freezer Temp is Ok
+    entity_id: binary_sensor.freezer_temp_threshold
+    state: 'on'
+    repeat: 15
+    can_acknowledge: True
+    notifiers:
+      - iosapp 
 
 #alert if loadbalancer goes down
   loadbalancerisdown:

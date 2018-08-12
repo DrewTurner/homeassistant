@@ -73,8 +73,8 @@
     name: Cameras
     entities:
       - camera.harper
+      - camera.uvc_g3
       - camera.uvc_dome
-      - camera.g3
   temperature:
     name: Temperature
     entities:
