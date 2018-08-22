@@ -592,6 +592,7 @@ scene:
 
 #enable mqtt broker
 mqtt:
+  password: !secret http_password
 
 #Cover to control garage door
 cover:
