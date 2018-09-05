@@ -336,6 +336,7 @@ sensor:
 
 #speedtest
   - platform: speedtest
+    server_id: 5263  
     minute:
       - 0
       - 30
@@ -478,7 +479,7 @@ alert:
     done_message: Basement Backdoor was shut
     entity_id: sensor.back_door_access_control
     state: '22'
-    repeat: 1
+    repeat: 15
     can_acknowledge: True
     notifiers:
       - iosapp
@@ -489,7 +490,7 @@ alert:
     done_message: Front Door was shut
     entity_id: sensor.front_door_access_control
     state: '22'
-    repeat: 1
+    repeat: 15
     can_acknowledge: True
     notifiers:
       - iosapp
@@ -500,7 +501,7 @@ alert:
     done_message: Garage Door was shut
     entity_id: sensor.garage_door_alarm_level
     state: '255'
-    repeat: 60
+    repeat: 15
     can_acknowledge: True
     notifiers:
       - iosapp
