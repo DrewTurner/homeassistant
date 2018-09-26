@@ -35,8 +35,7 @@ device_tracker:
       track_new_devices: False
       hide_if_away: True
 
-  #setting up nvr access
-#DT5/24/2018 - removed to troubleshoot hassionot starting
+#setting up nvr access
 camera:
   - platform: uvc
     nvr: 192.168.101.35
@@ -234,6 +233,13 @@ sensor:
       - type: load_5m
       - type: load_15m
 
+#stock sensors
+  - platform: alpha_vantage
+    api_key: !secret alpha_vantage_api_key
+    symbols:
+    - symbol: VGT
+      name: Vanguard Information Technology Index Fund
+
 #temp and humidity
   - platform: mqtt
     name: 'Freezer Temperature'
@@ -258,22 +264,6 @@ sensor:
     state_topic: 'home/girls/humidity'
     qos: 0
     unit_of_measurement: "%"    
-
-#stock sensor
-  - platform: alpha_vantage
-    api_key: !secret alpha_vantage_api_key
-    symbols:
-    - symbol: VGT
-      name: Vanguard Information Technology Index Fund
-    - symbol: GOOGL
-      name: Google - Alphabet
-    - symbol: DJI
-      name: Dow Jones Industrial Average
-    - symbol: INX
-      name: S&P 500 Index
-    - symbol: IXIC
-      name: Nasdaq Composite
-
 
 #pollen sensor
   - platform: pollen
@@ -336,7 +326,7 @@ sensor:
 
 #speedtest
   - platform: speedtest
-    server_id: 5263  
+    server_id: 5263
     minute:
       - 0
       - 30
@@ -423,7 +413,6 @@ tts:
 
 #binary ring sensor
 binary_sensor:
-  - platform: ring
 
 #salt water level above or below threshold.
   - platform: threshold
@@ -479,7 +468,7 @@ alert:
     done_message: Basement Backdoor was shut
     entity_id: sensor.back_door_access_control
     state: '22'
-    repeat: 15
+    repeat: 5
     can_acknowledge: True
     notifiers:
       - iosapp
