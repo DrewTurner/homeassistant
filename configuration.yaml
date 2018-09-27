@@ -276,7 +276,7 @@ sensor:
 
 #pihole sensor
   - platform: pi_hole
-    host: 192.168.101.38
+    host: 192.168.101.31
     monitored_conditions:
       - ads_blocked_today
       - ads_percentage_today
