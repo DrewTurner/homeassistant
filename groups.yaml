@@ -135,14 +135,6 @@
       - sensor.pihole_dns_unique_domains
       - sensor.pihole_seen_clients
 
-  stocks:
-    name: Stocks
-    entities:
-      - sensor.vanguard_information_technology_index_fund
-      - sensor.google__alphabet
-      - sensor.dow_jones_industrial_average
-      - sensor.nasdaq_composite
-      - sensor.sp_500_index
   battery:
     name: Battery Levels
     entities:
@@ -168,3 +160,7 @@
       - sensor.load_1m
       - sensor.load_5m
       - sensor.load_15m
+  stocks:
+    name: Stocks
+    entities:
+      - sensor.vanguard_information_technology_index_fund

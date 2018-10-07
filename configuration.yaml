@@ -140,14 +140,14 @@ history:
      - sensor.back_door_burglar
      - sensor.back_door_alarm_type
      - sensor.back_door_alarm_level
-     - sensor.ring_front_door_battery
-     - sensor.ring_front_door_last_activity
-     - sensor.ring_front_door_last_ding
-     - sensor.ring_front_door_volume
-     - sensor.ring_front_door_wifi_signal_category
-     - sensor.ring_front_door_wifi_signal_strength
-     - binary_sensor.ring_front_door_motion
-     - binary_sensor.ring_front_door_ding
+ #    - sensor.ring_front_door_battery
+ #    - sensor.ring_front_door_last_activity
+ #    - sensor.ring_front_door_last_ding
+ #    - sensor.ring_front_door_volume
+ #    - sensor.ring_front_door_wifi_signal_category
+ #    - sensor.ring_front_door_wifi_signal_strength
+ #    - binary_sensor.ring_front_door_motion
+ #    - binary_sensor.ring_front_door_ding
      - camera.harper
      - camera.uvc_dome
      - camera.uvc_g3
@@ -195,14 +195,14 @@ logbook:
      - sensor.back_door_burglar
      - sensor.back_door_alarm_type
      - sensor.back_door_alarm_level
-     - sensor.ring_front_door_battery
-     - sensor.ring_front_door_last_activity
-     - sensor.ring_front_door_last_ding
-     - sensor.ring_front_door_volume
-     - sensor.ring_front_door_wifi_signal_category
-     - sensor.ring_front_door_wifi_signal_strength
-     - binary_sensor.ring_front_door_motion
-     - binary_sensor.ring_front_door_ding
+#     - sensor.ring_front_door_battery
+#     - sensor.ring_front_door_last_activity
+#     - sensor.ring_front_door_last_ding
+#     - sensor.ring_front_door_volume
+#     - sensor.ring_front_door_wifi_signal_category
+#     - sensor.ring_front_door_wifi_signal_strength
+#     - binary_sensor.ring_front_door_motion
+#     - binary_sensor.ring_front_door_ding
      - camera.harper
      - camera.uvc_dome
      - camera.uvc_g3
@@ -327,9 +327,12 @@ sensor:
 #speedtest
   - platform: speedtest
     server_id: 5263
-    minute:
+    minute: 30
+    hour:
       - 0
-      - 30
+      - 6
+      - 12
+      - 18
     monitored_conditions:
       - ping
       - download
