@@ -221,6 +221,12 @@ sun:
 #Weather prediction
 sensor:
 
+#Waze!
+  - platform: waze_travel_time
+    origin: device_tracker.foehammer
+    destination: !secret work_address
+    region: 'US'
+
 #homeassistant platform monitor
   - platform: systemmonitor
     resources:
