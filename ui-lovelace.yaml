@@ -1,0 +1,211 @@
+title: Home
+# Exclude entities from "Unused entities" view
+excluded_entities:
+  - weblink.router
+views:
+    # Specify a tab icon if you want the view tab to be an icon.
+  - id: 0  # Automatically created id
+    icon: mdi:home-assistant
+    # Title of the view. Will be used as the tooltip for tab icon
+    title: Turner view
+    cards:
+        # Entities card will take a list of entities and show their state.
+      - id: 3fb3d65d020c4bb89222c10e91eb9cf4  # Automatically created id
+        type: entities
+        # Title of the entities card
+        title: Environment
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - climate.hallway_nest
+          - sensor.salt_level
+          - sensor.freezer_temperature
+          - sensor.freezer_humidity
+          - sensor.hg_humidity
+          - sensor.hg_temperature
+      - id: 5de3151c5f13448d95648d570ad6c13a  # Automatically created id
+        type: entities
+        entities:
+          - device_tracker.foehammer
+          - device_tracker.lindseysiphone3
+        card_config:
+          type: glance
+          title: People that are home
+      - id: ab3cf23e2bbc471898ac8eadf0dbc4a8  # Automatically created id
+        type: entities
+        title: Travel Time
+        entities:
+#          - input_select.destination
+          - sensor.travel_to_daycare
+          - sensor.travel_to_work
+          - sensor.travel_to_home
+
+      - id: 27
+        type: entities
+        title: SpaceX
+        entities:
+          - sensor.spacex_next_rocket
+          - sensor.spacex_next_mission_name
+          - sensor.spacex_next_launch_day
+          - sensor.spacex_next_launch_time
+          - sensor.spacex_next_launch_site
+          - sensor.starman_earth_distance
+
+        # The picture entity card will represent an entity with a picture
+      - id: 2546513f30a74caba6eebd97be4eee48  # Automatically created id
+        type: picture-entity
+        image: https://hass.drewnturner.com/local/house.jpg
+        entity: light.outside_lights_1_level
+
+      - id: f0680be89fd04b929fd56bbbd043668a  # Automatically created id
+        type: entities
+        # Title of the entities card
+        title: Security
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - sensor.front_door
+          - sensor.basement_door
+          - cover.garagedoorcontrol
+          - sensor.ring_front_door_last_activity
+        # The markdown card will render markdown text.
+      - id: e89ad1ebf001441b982f3fed41f5ea52  # Automatically created id
+        type: markdown
+        title: Lovelace
+        content: >
+          Welcome to your **Lovelace UI**.
+  - id: 1  # Automatically created id
+    icon: mdi:weather-cloudy
+    title: Weather
+    cards:
+      - id: f044fe32d31f4b14a55aa4074b43ace4  # Automatically created id
+        type: entities
+        title: Temperature
+        entities:
+          - sensor.pws_temp_f
+          - sensor.pws_feelslike_f
+          - sensor.pws_temp_high_1d_f
+          - sensor.pws_temp_low_1d_f
+          - sensor.pws_alerts
+          - sensor.pws_precip_today_in
+          - sensor.pws_precip_today_string
+          - sensor.pws_precip_1d_in
+
+      - id: 057f3666823847fea49e0f502db389a8  # Automatically created id
+        type: entities
+        title: Weather
+        entities:
+          - sensor.pws_weather_1d
+          - sensor.pws_weather_1n
+          - sensor.pws_weather_2d
+          - sensor.pws_weather_2n
+          - sensor.pws_weather_3d
+          - sensor.pws_weather_3n
+          - sensor.pws_weather_4d
+          - sensor.pws_weather_4n
+      - id: b08c80cd7a544551a676b3df93108246  # Automatically created id
+        type: entities
+        title: Precipitation
+        entities:
+          - sensor.pws_precip_1d
+          - sensor.pws_precip_2d
+          - sensor.pws_precip_3d
+          - sensor.pws_precip_4d
+          - sensor.pws_precip_1d_in
+          - sensor.pws_precip_2d_in
+          - sensor.pws_precip_3d_in
+          - sensor.pws_precip_4d_in
+      - id: c373406899be4e6a85cf5cd2de7cb987  # Automatically created id
+        type: entities
+        title: Allergy
+        entities:
+          - sensor.allergy_index_today
+          - sensor.allergy_index_yesterday
+          - sensor.cold__flu_forecasted_average
+
+  - id: 2  # Automatically created id
+    icon: mdi:monitor
+    title: System Monitor
+    cards:
+      - id: 2a0051eb149b4fcfb4e3fb8a39aa7a1e  # Automatically created id
+        type: entities
+        title: System Monitor
+        entities:
+          - binary_sensor.challenger
+          - binary_sensor.ubiquiticontroller
+          - binary_sensor.loadbalancer
+          - binary_sensor.wemos_freezer
+          - binary_sensor.wemos_salt
+      - id: f195b73d58c44aaa8513b013fca687f4  # Automatically created id
+        type: entities
+        title: pihole
+        entities:
+          - sensor.pihole_ads_blocked_today
+          - sensor.pihole_ads_percentage_blocked_today
+          - sensor.pihole_dns_queries_today
+          - sensor.pihole_domains_blocked
+          - sensor.pihole_dns_queries_cached
+          - sensor.pihole_dns_queries_forwarded
+          - sensor.pihole_dns_unique_clients
+          - sensor.pihole_dns_unique_domains
+          - sensor.pihole_seen_clients
+      - id: 0febb5eb5f344524bdef8d82b15eee34  # Automatically created id
+        type: entities
+        title: Battery Levels
+        entities:
+          - sensor.foehammer_battery_level
+          - sensor.drews_ipad_battery_level
+          - sensor.ring_front_door_battery
+          - sensor.garage_door_battery
+          - sensor.front_door_battery
+          - sensor.back_door_battery
+      - id: 9c6060e480ab49a59f70d08334401371  # Automatically created id
+        type: entities
+        title: Internet
+        entities:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.speedtest_ping
+      - id: e74e57da3ca44f65bcb67642d57aeaad  # Automatically created id
+        type: entities
+        title: Hass Monitor
+        entities:
+          - sensor.memory_free
+          - sensor.processor_use
+          - sensor.disk_use_percent_home
+          - sensor.last_boot
+          - sensor.load_1m
+          - sensor.load_5m
+          - sensor.load_15m
+  - id: 3  # Automatically created id
+    icon: mdi:cash
+    title: Stocks
+    cards:
+        # Entities card will take a list of entities and show their state.
+      - id: 4c915c30c1bc4a2c97b27e5714b629c3  # Automatically created id
+        type: entities
+        # Title of the entities card
+        title: Stocks
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - sensor.vanguard_information_technology_index_fund
+  - id: 4  # Automatically created id
+    icon: mdi:cctv
+    title: Cameras
+    cards:
+      - id: 058da7513952414bb19144fdc44e0302  # Automatically created id
+        type: picture-entity
+        entity: camera.harper
+        show_name: false
+        show_state: false
+      - id: 9725949a88944ab6965d05ac84045e48  # Automatically created id
+        type: picture-entity
+        entity: camera.gentry
+        show_name: false
+        show_state: false
+      - id: d41c7f98432f45459df870e54757be8d  # Automatically created id
+        type: picture-entity
+        entity: camera.uvc_dome
+        show_name: true
+        show_state: true

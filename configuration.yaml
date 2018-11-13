@@ -110,9 +110,9 @@ history:
      - sensor.front_door_burglar
      - sensor.front_door_alarm_type
      - sensor.front_door_alarm_level
-     - sensor.garage_door_alarm_type
-     - sensor.garage_door_burglar
-     - sensor.garage_door_sourcenodeid
+     - sensor.vision_zg8101_garage_door_detector_alarm_type
+     - sensor.vision_zg8101_garage_door_detector_burglar
+     - sensor.vision_zg8101_garage_door_detector_sourcenodeid
      - sensor.pws_alerts
      - sensor.pws_dewpoint_f
      - sensor.pws_feelslike_f
@@ -165,9 +165,9 @@ logbook:
      - sensor.front_door_burglar
      - sensor.front_door_alarm_type
      - sensor.front_door_alarm_level
-     - sensor.garage_door_alarm_type
-     - sensor.garage_door_burglar
-     - sensor.garage_door_sourcenodeid
+     - sensor.vision_zg8101_garage_door_detector_alarm_type
+     - sensor.vision_zg8101_garage_door_detector_burglar
+     - sensor.vision_zg8101_garage_door_detector_sourcenodeid
      - sensor.pws_alerts
      - sensor.pws_dewpoint_f
      - sensor.pws_feelslike_f
@@ -217,13 +217,35 @@ map:
 # Track the sun
 sun:
 
+input_select:
+  destination:
+    name: destination
+    options:
+      - Home
+      - DayCare
+      - Work
+
 #Sensors
 #Weather prediction
+
 sensor:
 
 #Waze!
   - platform: waze_travel_time
+    name: "Travel to DayCare"
     origin: device_tracker.foehammer
+    destination: !secret daycare_address
+    region: 'US'
+
+  - platform: waze_travel_time
+    name: "Travel to Home"
+    origin: device_tracker.foehammer
+    destination: !secret home_address
+    region: 'US'
+
+  - platform: waze_travel_time
+    name: "Travel to Work"
+    origin: !secret daycare_address
     destination: !secret work_address
     region: 'US'
 
@@ -302,6 +324,26 @@ sensor:
     resource: http://192.168.100.73
     scan_interval: 300
 
+#whats starmans status?
+  - platform: rest
+    name: Starman
+    json_attributes:
+      - earth_distance_km
+    value_template: '{{ value_json["speed_kph"] }}'
+    unit_of_measurement: "km/h"
+    resource: 'https://api.spacexdata.com/v2/info/roadster'
+
+#when is spacex's next launch?
+  - platform: rest
+    name: SpaceX
+    json_attributes:
+      - mission_name
+      - launch_site
+      - rocket
+    value_template: '{{ value_json["launch_date_unix"] }}'
+    resource: 'https://api.spacexdata.com/v2/launches/next'
+
+
 #WeatherUnderground
   - platform: wunderground
     api_key: !secret wunderground_api_key
@@ -329,6 +371,9 @@ sensor:
       - weather_3n
       - weather_4d
       - weather_4n
+      - precip_today_in
+      - precip_today_string
+      - precip_1d_in
 
 #speedtest
   - platform: speedtest
@@ -350,13 +395,13 @@ sensor:
       home_garage_door:
         friendly_name: "Home Garage Door"
         value_template: >-
-          {% if is_state('sensor.garage_door_alarm_level', '255') %}
+          {% if is_state('sensor.vision_zg8101_garage_door_detector_alarm_level_2', '255') %}
             Open
           {% else %}
             Closed
           {% endif %}        
         icon_template: >-
-          {% if is_state('sensor.garage_door_alarm_level', '255') %}
+          {% if is_state('sensor.vision_zg8101_garage_door_detector_alarm_level_2', '255') %}
             mdi:garage-open
           {% else %}
             mdi:garage
@@ -412,6 +457,34 @@ sensor:
         friendly_name: 'Garage Door Battery Level'
         value_template: '{{ states.zwave.garage_door.attributes.battery_level }}'
         unit_of_measurement: '%'
+
+  - platform: template
+    sensors:
+      starman_speed:
+        friendly_name: 'Starman Speed'
+        value_template: '{{ states.sensor.starman.state | round(0) }}'
+        unit_of_measurement: 'km/h'
+      starman_earth_distance:
+        friendly_name: 'Starman Distance'
+        value_template: '{{ (states.sensor.starman.attributes["earth_distance_km"] | multiply(0.000001)) | round(2) }}'
+        unit_of_measurement: 'km x10⁶'
+      spacex_next_launch_day:
+        friendly_name: 'Next SpaceX Launch'
+        value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%d.%m.%Y")}}'
+      spacex_next_launch_time:
+        friendly_name: 'Next SpaceX Launch Time'
+        value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%H:%M")}}'
+        unit_of_measurement: 'h'
+      spacex_next_rocket:
+        friendly_name: 'Rocket'
+        value_template: '{{ states.sensor.spacex.attributes["rocket"]["rocket_name"] }}'
+      spacex_next_launch_site:
+        friendly_name: 'Launch Site'
+        value_template: '{{ states.sensor.spacex.attributes["launch_site"]["site_name_long"] }}'
+      spacex_next_mission_name:
+        friendly_name: 'Mission'
+        value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
+
 
 #ring platform
   - platform: ring
@@ -620,7 +693,7 @@ cover:
     optimistic: false
     retain: true
 #this dynamically assigns value and icon templates to the garage door.
-#control is in the mqtt single cover.  Icon is decided by sensor.garage_door_alarm_level
+#control is in the mqtt single cover.  Icon is decided by sensor.vision_zg8101_garage_door_detector_alarm_level
   - platform: template
     covers:
       garagedoorcontrol:
