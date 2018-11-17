@@ -20,14 +20,18 @@ Ga
 
 
 SpaceX Launch Information
+Uses SpaceX API as a sensor to get next launch information from SpaceX.
 
 Freezer Temperature Sensor
 
 Water Softener Salt Level Sensor
 
 Internet Speed Test
+Tests the speed every 6 hours, gets download and upload bandwidth as well as latency.
 
 Cameras
+I run Ubiquiti Unifi on a virtual machine using vagrant and virtualbox.  Homeassistant has an api key into that system
+
 | Camera Model          |
 | --------------------- |
 | Ubiquiti UVC-Dome     |
