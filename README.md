@@ -14,6 +14,7 @@ Nest Thermostat
 ### Garage Door Opener
 
 ### Garage Door Sensor
+  Monoprice Z-Wave Garage Door Sensor.  Simply mounted about 5 feet up on the door.  This detects garage door open or closed.
 
 ### Door Sensors
 
