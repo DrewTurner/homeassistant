@@ -13,13 +13,13 @@ GE Zwave Plus Paddle switches
 Nest Thermostat
 
 ### Garage Door Opener
-  Garage doors open and shut based on a simple on/off relay setup.  Using a Wemos D1 Mini, 5v Relay, and MQTT.
-  Credit to [DrZzs Youtube Tutorial] (https://github.com/aderusha/MQTTCarPresence).  
+  Garage doors open and shut based on a simple on/off relay setup.  Using a Wemos D1 Mini, 5v Relay, and MQTT.  
+  Credit to [DrZzs Youtube Tutorial](https://github.com/aderusha/MQTTCarPresence).  
 
 ### Automated Garage Door Close and Shut
   A Wemos D1 Mini is inside my car configured to connect to wifi and send messages over MQTT.  This powers on when the car is put in accessory mode which then tells the garage door to open.  30 seconds after I leave it then tells the door to close.  
   Similar setup for coming home.  Open as soon as it connects to wifi, and give it 1 minute until it closes the door.  
-  Credit to [aderusha] (https://github.com/aderusha/MQTTCarPresence).
+  Credit to [aderusha](https://github.com/aderusha/MQTTCarPresence).
 
 ### Garage Door Sensor
   [Monoprice Z-Wave Garage Door Sensor](https://www.monoprice.com/product?p_id=11987).  Simply mounted about 5 feet up on the door.  This detects garage door open or closed.
