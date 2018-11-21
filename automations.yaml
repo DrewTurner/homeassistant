@@ -15,3 +15,33 @@
   action:
   - service: homeassistant.turn_off
     entity_id: light.outside_lights_1_level
+- id: '1542741604798'
+  alias: CarPresenceDrew
+  trigger:
+  - entity_id: binary_sensor.carpresencedrew
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: cover.garagedoorcontrol
+    state: closed
+  action:
+  - data:
+      entity_id: cover.garagedoorcontrol
+    service: cover.open_cover
+- id: '1542741976924'
+  alias: CarPresenceDrew_Off
+  trigger:
+  - entity_id: binary_sensor.carpresencedrew
+    for: '1'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: cover.garagedoorcontrol
+    state: open
+  action:
+  - data:
+      entity_id: cover.garagedoorcontrol
+    service: cover.close_cover
