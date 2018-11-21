@@ -49,3 +49,21 @@ I run Ubiquiti Unifi on a virtual machine using vagrant and virtualbox.  Homeass
 | Ubiquiti UVC-G3       |
 | Ubiquiti MVC-Micro    |
 | Ubiquiti UVC-G3-Micro |
+
+### Weather Information
+![alt_text](https://github.com/DrewTurner/homeassistant/blob/master/Environment.png)
+
+### SpaceX Launch Information
+![alt_text](https://github.com/DrewTurner/homeassistant/blob/master/SpaceX.png)
+
+### Environment View
+![alt_text](https://github.com/DrewTurner/homeassistant/raw/master/Screenshot%20from%202018-11-20%2020-37-51.png)
+
+### Security View
+![alt_text](https://github.com/DrewTurner/homeassistant/raw/master/Security.png)
+
+### System View
+![alt text](https://github.com/DrewTurner/homeassistant/blob/master/System%20Information.png)
+
+### Travel Time
+![alt_text](https://github.com/DrewTurner/homeassistant/blob/master/Travel%20Time.png)
