@@ -13,7 +13,7 @@ GE Zwave Plus Paddle switches
 Nest Thermostat
 
 ### Garage Door Opener
-  Garage doors open and shut based on a simple on/off relay setup.  Using a Wemos D1 Mini, 5v Relay, and MQTT.
+  Garage doors open and shut based on a simple on/off relay setup.  Using a Wemos D1 Mini, 5v Relay, and MQTT.  
   Credit to [DrZzs Youtube Tutorial](https://github.com/aderusha/MQTTCarPresence).  
 
 ### Automated Garage Door Close and Shut
