@@ -227,6 +227,38 @@ input_select:
       - DayCare
       - Work
 
+#switch
+#christmas lights girls trees
+switch:
+  - platform: mqtt
+    name: "Christmas Lights"
+    command_topic: "cmnd/sonoff/power"
+    state_topic: "stat/sonoff/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+#christmas lights main tree
+  - platform: mqtt
+    name: "Christmas Tree Lights"
+    command_topic: "cmnd/christmastreelights/power"
+    state_topic: "stat/christmastreelights/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+#pwrswitch1
+  - platform: mqtt
+    name: "Power Switch 1"
+    command_topic: "cmnd/pwrswitch1/power"
+    state_topic: "stat/pwrswitch1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true    
+
 #Sensors
 #Weather prediction
 
@@ -658,11 +690,22 @@ alert:
 
 #turn the outside lights on during evening to 50%
 scene:
-  name: eveninglightturnon
-  entities:
-    light.outside_lights_1_level:
-      state: on
-      brightness_pct: 50
+  - name: eveninglightturnon
+    entities:
+      light.outside_lights_1_level:
+        state: on
+        brightness_pct: 50
+#christmas lights scene
+  - name: christmas_lights_on
+    entities:
+      switch.christmas_lights: on
+      switch.christmas_tree_lights: on
+      switch.power_switch_1: on
+  - name: christmas_lights_off
+    entities:
+      switch.christmas_lights: off
+      switch.power_switch_1: off
+      switch.christmas_tree_lights: off
 
 #enable mqtt broker
 mqtt:

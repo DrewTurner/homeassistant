@@ -34,7 +34,9 @@
   alias: CarPresenceDrew_Off
   trigger:
   - entity_id: binary_sensor.carpresencedrew
-    for: '1'
+    for:
+      minutes: 1
+      seconds: 15
     platform: state
     to: 'off'
   condition:
@@ -45,3 +47,19 @@
   - data:
       entity_id: cover.garagedoorcontrol
     service: cover.close_cover
+- id: '1545151196586'
+  alias: Basement Christmas Lights Turn On
+  trigger:
+    platform: time
+    at: '16:50:00'
+  action:
+  - entity_id: scene.christmas_lights_on
+    service: scene.turn_on
+- id: '154515119658898'
+  alias: Basement Christmas Lights Turn Off
+  trigger:
+    platform: time
+    at: '22:45:00'
+  action:
+  - entity_id: scene.christmas_lights_off
+    service: scene.turn_on

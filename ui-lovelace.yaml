@@ -10,6 +10,14 @@ views:
     title: Turner view
     cards:
         # Entities card will take a list of entities and show their state.
+      - id: 5de3151c5f13448d95648d570ad6c13a  # Automatically created id
+        type: entities
+        entities:
+          - device_tracker.foehammer
+          - device_tracker.lindseysiphone3
+        card_config:
+          type: glance
+          title: People that are home
       - id: 3fb3d65d020c4bb89222c10e91eb9cf4  # Automatically created id
         type: entities
         # Title of the entities card
@@ -23,14 +31,6 @@ views:
           - sensor.freezer_humidity
           - sensor.hg_humidity
           - sensor.hg_temperature
-      - id: 5de3151c5f13448d95648d570ad6c13a  # Automatically created id
-        type: entities
-        entities:
-          - device_tracker.foehammer
-          - device_tracker.lindseysiphone3
-        card_config:
-          type: glance
-          title: People that are home
       - id: ab3cf23e2bbc471898ac8eadf0dbc4a8  # Automatically created id
         type: entities
         title: Travel Time
@@ -40,18 +40,14 @@ views:
           - sensor.travel_to_work
           - sensor.travel_to_home
 
-      - id: 27
-        type: entities
-        title: SpaceX
+      #Christmas Lights    
+      - type: entities
+        id: 28
+        title: Christmas!
         entities:
-          - sensor.spacex_next_rocket
-          - sensor.spacex_next_mission_name
-          - sensor.spacex_next_launch_day
-          - sensor.spacex_next_launch_time
-          - sensor.spacex_next_launch_site
-          - sensor.starman_earth_distance
-
-        # The picture entity card will represent an entity with a picture
+          - entity: switch.christmas_lights
+          - entity: switch.christmas_tree_lights
+          - entity: switch.power_switch_1
       - id: 2546513f30a74caba6eebd97be4eee48  # Automatically created id
         type: picture-entity
         image: https://hass.drewnturner.com/local/house.jpg
@@ -74,7 +70,21 @@ views:
         title: Lovelace
         content: >
           Welcome to your **Lovelace UI**.
-  - id: 1  # Automatically created id
+  - id: 1
+    icon: mdi:rocket
+    title: SpaceX
+    cards:
+      - id: 275454545
+        type: entities
+        title: SpaceX
+        entities:
+          - sensor.spacex_next_rocket
+          - sensor.spacex_next_mission_name
+          - sensor.spacex_next_launch_day
+          - sensor.spacex_next_launch_time
+          - sensor.spacex_next_launch_site
+          - sensor.starman_earth_distance
+  - id: 2  # Automatically created id
     icon: mdi:weather-cloudy
     title: Weather
     cards:
@@ -123,7 +133,7 @@ views:
           - sensor.allergy_index_yesterday
           - sensor.cold__flu_forecasted_average
 
-  - id: 2  # Automatically created id
+  - id: 3  # Automatically created id
     icon: mdi:monitor
     title: System Monitor
     cards:
@@ -177,7 +187,7 @@ views:
           - sensor.load_1m
           - sensor.load_5m
           - sensor.load_15m
-  - id: 3  # Automatically created id
+  - id: 4  # Automatically created id
     icon: mdi:cash
     title: Stocks
     cards:
@@ -190,7 +200,7 @@ views:
         # Each entry is an entity ID or a map with extra options.
         entities:
           - sensor.vanguard_information_technology_index_fund
-  - id: 4  # Automatically created id
+  - id: 5  # Automatically created id
     icon: mdi:cctv
     title: Cameras
     cards:
@@ -209,3 +219,34 @@ views:
         entity: camera.uvc_dome
         show_name: true
         show_state: true
+      - id: d41c7f98432f45459df870e547578322  # Automatically created id
+        type: picture-entity
+        entity: camera.dt_office
+        show_name: true
+        show_state: true
+
+
+  - id: 6  # Automatically created id
+    icon: mdi:auto-fix
+    title: Scene and Automations
+    cards:
+      - id: 5252525  # Entities card will take a list of entities and show their state.
+        type: entities
+        # Title of the entities card
+        title: Scenes
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - scene.christmas_lights_on
+          - scene.christmas_lights_off
+          - scene.eveninglightturnon
+      - id: 5252526
+        type: entities
+        title: Automations
+        entities:
+          - automation.outside_lights_turnon
+          - automation.outside_lights_turnoff
+          - automation.carpresencedrew
+          - automation.carpresencedrew_off
+          - automation.basement_christmas_lights_turn_on
+          - automation.basement_christmas_lights_turn_off
