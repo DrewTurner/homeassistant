@@ -225,8 +225,18 @@ views:
         show_name: true
         show_state: true
 
+  - id: 6
+    icon: mdi:play-network
+    title: MediaPlayers
+    cards:
+      - id: 23234235235235235
+        type: entities
+        entities:
+          - media_player.spotify
+          - media_player.living_room_tv
+          - media_player.basement
 
-  - id: 6  # Automatically created id
+  - id: 7
     icon: mdi:auto-fix
     title: Scene and Automations
     cards:

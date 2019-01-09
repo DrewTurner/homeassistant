@@ -14,3 +14,13 @@ sensor.hg_humidity:
   icon: mdi:thermometer
 sensor.hg_temperature:
   icon: mdi:thermometer
+switch.christmas_lights:
+  icon: mdi:pine-tree
+switch.christmas_tree_lights:
+  icon: mdi:pine-tree
+switch.power_switch_1:
+  icon: mdi:pine-tree
+zwave.outside_fd_lights:
+  icon: mdi:lightbulb
+light.outside_lights_1_level:
+  icon: mdi:lightbulb

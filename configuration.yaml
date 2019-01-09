@@ -13,6 +13,11 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+
 #setting up ios notifications
 #dt 1/1/2018
 ios:
@@ -87,7 +92,7 @@ http:
     use_x_forwarded_for: true
     trusted_proxies: !secret trusted_proxy
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-  # base_url: example.duckdns.org:8123
+    base_url: !secret http_base_url
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -527,7 +532,7 @@ sensor:
 tts:
   - platform: google
 
-#binary ring sensor
+#binary sensors
 binary_sensor:
 
 #salt water level above or below threshold.
@@ -567,6 +572,15 @@ binary_sensor:
   - platform: ping
     host: 192.168.100.73
     name: wemos_salt
+
+#binary_sensors for ring doorbell
+  - platform: ring
+
+#enable cast to chromecast
+cast:
+  media_player:
+    - host: 192.168.100.62
+    - host: 192.168.100.82
 
 # Cloud
 cloud:

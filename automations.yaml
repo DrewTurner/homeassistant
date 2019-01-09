@@ -24,12 +24,12 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: cover.garagedoorcontrol
-    state: closed
+    entity_id: switch.power_switch_1
+    state: 'off'
   action:
   - data:
-      entity_id: cover.garagedoorcontrol
-    service: cover.open_cover
+      entity_id: switch.power_switch_1
+    service: switch.turn_on
 - id: '1542741976924'
   alias: CarPresenceDrew_Off
   trigger:
@@ -41,12 +41,12 @@
     to: 'off'
   condition:
   - condition: state
-    entity_id: cover.garagedoorcontrol
-    state: open
+    entity_id: switch.power_switch_1
+    state: 'on'
   action:
   - data:
-      entity_id: cover.garagedoorcontrol
-    service: cover.close_cover
+      entity_id: switch.power_switch_1
+    service: switch.turn_off
 - id: '1545151196586'
   alias: Basement Christmas Lights Turn On
   trigger:
@@ -58,8 +58,42 @@
 - id: '154515119658898'
   alias: Basement Christmas Lights Turn Off
   trigger:
+  - at: '23:00:00'
     platform: time
-    at: '22:45:00'
   action:
   - entity_id: scene.christmas_lights_off
     service: scene.turn_on
+- id: '1546968675789'
+  alias: turn on front porch lights for activity
+  trigger:
+  - entity_id: binary_sensor.ring_front_door_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: switch.outside_fd_lights
+    state: 'off'
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - data:
+      entity_id: switch.outside_fd_lights
+    service: switch.turn_on
+- id: '1547008207879'
+  alias: turn off front porch lights for motion
+  trigger:
+  - entity_id: binary_sensor.ring_front_door_motion
+    for: '120'
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: switch.outside_fd_lights
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.outside_fd_lights
+    service: switch.turn_off
