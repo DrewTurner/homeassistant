@@ -13,6 +13,8 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+stream:
+
 media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
@@ -32,7 +34,7 @@ notify:
   #setting up unifi access
 device_tracker:
   - platform: unifi
-    host: 192.168.101.35
+    host: !secret unifi_server
     verify_ssl: False
     username: !secret unifi_username
     password: !secret unifi_password
@@ -43,9 +45,16 @@ device_tracker:
 #setting up nvr access
 camera:
   - platform: uvc
-    nvr: 192.168.101.35
+    nvr: !secret unifi_video_server
     key: !secret unifi_video_key
     password: !secret unifi_video_password
+  - platform: mjpeg
+    name: OctoPrint
+    still_image_url: !secret octostillimageurl
+    mjpeg_url: !secret octomjpeg_url
+  - platform: generic
+    name: OctoPrintGeneric
+    still_image_url: !secret octostillimageurl
 
   #setting up nest
   #dt 12/28/2017
@@ -59,6 +68,15 @@ nest:
       - 'humidity'
       - 'operation_mode'
       - 'hvac_state'
+
+#enable system health monitoring
+system_health:
+
+#access to octoprint for ender 3
+octoprint:
+  host: !secret octoprinthostip
+  api_key: !secret octoprintapikey
+  bed: true
 
 #setup ring
 ring:
@@ -85,9 +103,9 @@ frontend:
 config:
 
 http:
-  # Secrets are defined in the file secrets.yaml
-  # force password
-  #dt 12/28/2017
+# Secrets are defined in the file secrets.yaml
+# force password
+#dt 12/28/2017
     api_password: !secret http_password
     use_x_forwarded_for: true
     trusted_proxies: !secret trusted_proxy
@@ -120,29 +138,6 @@ history:
      - sensor.vision_zg8101_garage_door_detector_alarm_type
      - sensor.vision_zg8101_garage_door_detector_burglar
      - sensor.vision_zg8101_garage_door_detector_sourcenodeid
-     - sensor.pws_alerts
-     - sensor.pws_dewpoint_f
-     - sensor.pws_feelslike_f
-     - sensor.pws_precip_1d_in
-     - sensor.pws_precip_2d_in
-     - sensor.pws_precip_3d_in
-     - sensor.pws_precip_4d_in
-     - sensor.pws_precip_1d
-     - sensor.pws_precip_2d
-     - sensor.pws_precip_3d
-     - sensor.pws_precip_4d
-     - sensor.pws_temp_f
-     - sensor.pws_temp_high_1d_f
-     - sensor.pws_temp_low_1d_f
-     - sensor.pws_weather
-     - sensor.pws_weather_1d
-     - sensor.pws_weather_1n
-     - sensor.pws_weather_2d
-     - sensor.pws_weather_2n
-     - sensor.pws_weather_3d
-     - sensor.pws_weather_3n
-     - sensor.pws_weather_4d
-     - sensor.pws_weather_4n
      - sensor.back_door_sourcenodeid
      - sensor.back_door_burglar
      - sensor.back_door_alarm_type
@@ -175,29 +170,6 @@ logbook:
      - sensor.vision_zg8101_garage_door_detector_alarm_type
      - sensor.vision_zg8101_garage_door_detector_burglar
      - sensor.vision_zg8101_garage_door_detector_sourcenodeid
-     - sensor.pws_alerts
-     - sensor.pws_dewpoint_f
-     - sensor.pws_feelslike_f
-     - sensor.pws_precip_1d_in
-     - sensor.pws_precip_2d_in
-     - sensor.pws_precip_3d_in
-     - sensor.pws_precip_4d_in
-     - sensor.pws_precip_1d
-     - sensor.pws_precip_2d
-     - sensor.pws_precip_3d
-     - sensor.pws_precip_4d
-     - sensor.pws_temp_f
-     - sensor.pws_temp_high_1d_f
-     - sensor.pws_temp_low_1d_f
-     - sensor.pws_weather
-     - sensor.pws_weather_1d
-     - sensor.pws_weather_1n
-     - sensor.pws_weather_2d
-     - sensor.pws_weather_2n
-     - sensor.pws_weather_3d
-     - sensor.pws_weather_3n
-     - sensor.pws_weather_4d
-     - sensor.pws_weather_4n
      - sensor.back_door_sourcenodeid
      - sensor.back_door_burglar
      - sensor.back_door_alarm_type
@@ -256,36 +228,125 @@ switch:
 
 #pwrswitch1
   - platform: mqtt
-    name: "Power Switch 1"
+    name: "Ender 3 Power"
     command_topic: "cmnd/pwrswitch1/power"
     state_topic: "stat/pwrswitch1/POWER"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true    
+
+#pwrswitch2
+  - platform: mqtt
+    name: "Ender 3 Light"
+    command_topic: "cmnd/pwrswitch2/power"
+    state_topic: "stat/pwrswitch2/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
 
 #Sensors
 #Weather prediction
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    units: us
+    mode: daily
+    latitude: !secret latitude
+    longitude: !secret longitude
+    
+
+#speedtest
+speedtestdotnet:
+  server_id: 5263
+  scan_interval:
+    hours: 4
+  monitored_conditions:
+    - ping
+    - download
+    - upload
 
 sensor:
+#pwrswitch2 data collection
+  - platform: mqtt
+    name: "Ender3 Voltage"
+    state_topic: "tele/pwrswitch2/SENSOR"
+    value_template: "{{value_json['ENERGY'].Voltage }}"
+    qos: 2
+    unit_of_measurement : "V"
+    icon: mdi:flash-circle
+    availability_topic: "tele/pwrswitch2/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline" 
 
+  - platform: mqtt
+    name: "Ender3 Watts"
+    state_topic: "tele/pwrswitch2/SENSOR"
+    value_template: "{{value_json['ENERGY'].Power }}"
+    qos: 2
+    unit_of_measurement : "W"
+    icon: mdi:flash-circle
+    availability_topic: "tele/pwrswitch2/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "Ender3 Amps"
+    state_topic: "tele/pwrswitch2/SENSOR"
+    value_template: "{{value_json['ENERGY'].Current }}"
+    qos: 2
+    unit_of_measurement : "A"
+    icon: mdi:flash-circle
+    availability_topic: "tele/pwrswitch2/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+#darksky
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    forecast:
+      - 0
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      
 #Waze!
+#general where am I to locations:
   - platform: waze_travel_time
-    name: "Travel to DayCare"
+    name: "Travel from Current Location to Home"
+    origin: device_tracker.foehammer
+    destination: !secret home_address
+    region: 'US'
+  - platform: waze_travel_time
+    name: "Travel from Current Location to Work"
+    origin: device_tracker.foehammer
+    destination: !secret work_address
+    region: 'US'
+
+#Dropping off the Girls
+  - platform: waze_travel_time
+    name: "Travel from Current Location to DayCare"
     origin: device_tracker.foehammer
     destination: !secret daycare_address
     region: 'US'
 
   - platform: waze_travel_time
-    name: "Travel to Home"
-    origin: device_tracker.foehammer
-    destination: !secret home_address
+    name: "Travel from Daycare to Work"
+    origin: !secret daycare_address
+    destination: !secret work_address
+    region: 'US'
+
+#Picking Up the Girls
+  - platform: waze_travel_time
+    name: "Travel from Work to Daycare"
+    origin: !secret work_address
+    destination: !secret daycare_address
     region: 'US'
 
   - platform: waze_travel_time
-    name: "Travel to Work"
+    name: "Travel from Daycare to Home"
     origin: !secret daycare_address
-    destination: !secret work_address
+    destination: !secret home_address
     region: 'US'
 
 #homeassistant platform monitor
@@ -382,52 +443,6 @@ sensor:
     value_template: '{{ value_json["launch_date_unix"] }}'
     resource: 'https://api.spacexdata.com/v2/launches/next'
 
-
-#WeatherUnderground
-  - platform: wunderground
-    api_key: !secret wunderground_api_key
-    monitored_conditions:
-      - alerts
-      - dewpoint_f
-      - feelslike_f
-      - precip_1d_in
-      - precip_2d_in
-      - precip_3d_in
-      - precip_4d_in
-      - precip_1d
-      - precip_2d
-      - precip_3d
-      - precip_4d
-      - temp_f
-      - temp_high_1d_f
-      - temp_low_1d_f
-      - weather
-      - weather_1d
-      - weather_1n
-      - weather_2d
-      - weather_2n
-      - weather_3d
-      - weather_3n
-      - weather_4d
-      - weather_4n
-      - precip_today_in
-      - precip_today_string
-      - precip_1d_in
-
-#speedtest
-  - platform: speedtest
-    server_id: 5263
-    minute: 30
-    hour:
-      - 0
-      - 6
-      - 12
-      - 18
-    monitored_conditions:
-      - ping
-      - download
-      - upload
-  
 #dynamically change icons
   - platform: template
     sensors:
@@ -477,7 +492,22 @@ sensor:
           {% else %}
             mdi:door-open
           {% endif %}
-
+  - platform: template
+    sensors:
+      deck_door:
+        friendly_name: "Deck Door"
+        value_template: >-
+          {% if is_state('sensor.deckdoor_access_control', '23') %}
+            Closed
+          {% else %}
+            Open
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.deckdoor_access_control', '23') %}
+            mdi:door-closed
+          {% else %}
+            mdi:door-open
+          {% endif %}
   - platform: template
     sensors:
       front_door_battery:
@@ -530,7 +560,8 @@ sensor:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
 
 #binary sensors
 binary_sensor:
@@ -573,6 +604,16 @@ binary_sensor:
     host: 192.168.100.73
     name: wemos_salt
 
+#sensor for pwrswitch1 for ender 3
+  - platform: ping
+    host: 192.168.100.64
+    name: pwrswitch1
+
+#sensor for octopi
+  - platform: ping
+    host: 192.168.100.16
+    name: octopi
+
 #binary_sensors for ring doorbell
   - platform: ring
 
@@ -597,6 +638,16 @@ alert:
     name: Basement Backdoor is open
     done_message: Basement Backdoor was shut
     entity_id: sensor.back_door_access_control
+    state: '22'
+    repeat: 5
+    can_acknowledge: True
+    notifiers:
+      - iosapp
+
+  deck_door:
+    name: Deck Door is open
+    done_message: Deck Door was shut
+    entity_id: sensor.deckdoor_access_control
     state: '22'
     repeat: 5
     can_acknowledge: True
@@ -691,7 +742,7 @@ alert:
     notifiers:
       - iosapp
       
-#alert if loadbalancer goes down
+#alert if wemossaltmonitor goes down
   wemos_salt_isdown:
     name: wemos_salt is Down
     done_message: wemos_salt is Up
@@ -700,7 +751,40 @@ alert:
     repeat: 240
     can_acknowledge: True
     notifiers:
+      - iosapp
+
+#alert if pwrswitch1 goes down
+  pwrswitch1_isdown:
+    name: pwrswitch1 is Down
+    done_message: pwrswitch1 is Up
+    entity_id: binary_sensor.pwrswitch1
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
       - iosapp     
+
+#alert if octopi goes down
+  octopi_isdown:
+    name: octopi is Down
+    done_message: octopi is Up
+    entity_id: binary_sensor.octopi
+    state: 'off'
+    repeat: 240
+    can_acknowledge: True
+    notifiers:
+      - iosapp             
+
+#Tell me when octoprint is done
+  printisdone:
+    name: Print is Done
+    done_message: Printing has Started
+    entity_id: binary_sensor.octoprint_printing
+    state: 'off'
+    repeat: 1440
+    can_acknowledge: True
+    notifiers:
+      - iosapp
 
 #turn the outside lights on during evening to 50%
 scene:
@@ -741,18 +825,6 @@ cover:
 #    optomistic: false
 #    retain: true
 
-  - platform: mqtt
-    name: "mqtttester"
-    state_topic: "outTopic"
-    username: homeassistant
-    password: !secret http_password
-    command_topic: "inTopic"
-    payload_open: "1"
-    payload_close: "0"
-    state_open: "on"
-    state_closed: "off"
-    optimistic: false
-    retain: true
 #this dynamically assigns value and icon templates to the garage door.
 #control is in the mqtt single cover.  Icon is decided by sensor.vision_zg8101_garage_door_detector_alarm_level
   - platform: template
