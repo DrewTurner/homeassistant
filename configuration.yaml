@@ -554,6 +554,15 @@ sensor:
         friendly_name: 'Mission'
         value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
 
+#friendly time view for octoprint status
+  - platform: template
+    sensors:
+      ender3_time_elapsed_friendly:
+        friendly_name: "Ender 3 Time Elapsed"
+        value_template: "{{ states('sensor.octoprint_time_elapsed') | int | timestamp_custom('%H:%M:%S', 0) }}"
+      ender3_time_remaining_friendly:
+        friendly_name: "Ender 3 Time Remaining"
+        value_template: "{{ states('sensor.octoprint_time_remaining') | int | timestamp_custom('%H:%M:%S', 0) }}"
 
 #ring platform
   - platform: ring
