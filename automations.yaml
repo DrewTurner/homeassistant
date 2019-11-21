@@ -115,3 +115,72 @@
   - data:
       entity_id: switch.outside_fd_lights
     service: switch.turn_on
+- id: '1560310950577'
+  alias: RocketClock - Daylight Morning
+  trigger:
+  - at: 07:00
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: switch.rocketclock_nightlight_2
+    service: switch.turn_off
+  - data:
+      entity_id: switch.rocketclock_daylight_2
+    service: switch.turn_on
+- id: '1560310950578'
+  alias: RocketClock - LightsOff
+  trigger:
+  - at: 09:00
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: switch.rocketclock_daylight_2
+    service: switch.turn_off
+  - data:
+      entity_id: switch.rocketclock_nightlight_2
+    service: switch.turn_off
+- id: '1560311397990'
+  alias: RocketClock - Nighttime Evening
+  trigger:
+  - at: '18:45'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: switch.rocketclock_nightlight_2
+    service: switch.turn_on
+  - data:
+      entity_id: switch.rocketclock_daylight_2
+    service: switch.turn_off
+- id: '1574043468949'
+  alias: TurnTurkeyOn
+  trigger:
+  - at: 06:45
+    platform: time
+  - at: '17:00'
+    platform: time
+  condition:
+  - condition: state
+    entity_id: switch.turkey_light
+    state: 'off'
+  action:
+  - data:
+      entity_id: switch.turkey_light
+    service: switch.turn_on
+- id: '1574043842266'
+  alias: TurnTurkeyOff
+  trigger:
+  - at: 07:45
+    platform: time
+  - at: '21:00'
+    platform: time
+  condition:
+  - condition: state
+    entity_id: switch.turkey_light
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.turkey_light
+    service: switch.turn_off

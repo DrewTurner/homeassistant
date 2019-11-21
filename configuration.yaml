@@ -15,11 +15,6 @@ homeassistant:
 
 stream:
 
-media_player:
-  - platform: spotify
-    client_id: !secret spotify_client_id
-    client_secret: !secret spotify_client_secret
-
 #setting up ios notifications
 #dt 1/1/2018
 ios:
@@ -30,17 +25,6 @@ notify:
  - platform: ios
    name: iOSApp
    target: !secret ios_target_id
-
-  #setting up unifi access
-device_tracker:
-  - platform: unifi
-    host: !secret unifi_server
-    verify_ssl: False
-    username: !secret unifi_username
-    password: !secret unifi_password
-    new_device_defaults:
-      track_new_devices: False
-      hide_if_away: True
 
 #setting up nvr access
 camera:
@@ -228,7 +212,7 @@ switch:
 
 #pwrswitch1
   - platform: mqtt
-    name: "Ender 3 Power"
+    name: "Turkey_Light"
     command_topic: "cmnd/pwrswitch1/power"
     state_topic: "stat/pwrswitch1/POWER"
     qos: 1
@@ -237,7 +221,7 @@ switch:
 
 #pwrswitch2
   - platform: mqtt
-    name: "Ender 3 Light"
+    name: "Ender 3 Power"
     command_topic: "cmnd/pwrswitch2/power"
     state_topic: "stat/pwrswitch2/POWER"
     qos: 1
@@ -254,6 +238,12 @@ weather:
     latitude: !secret latitude
     longitude: !secret longitude
     
+#pihole sensor
+# Example configuration.yaml entry
+pi_hole:
+  host: 192.168.101.31
+  ssl: false
+  verify_ssl: false
 
 #speedtest
 speedtestdotnet:
@@ -267,38 +257,38 @@ speedtestdotnet:
 
 sensor:
 #pwrswitch2 data collection
-  - platform: mqtt
-    name: "Ender3 Voltage"
-    state_topic: "tele/pwrswitch2/SENSOR"
-    value_template: "{{value_json['ENERGY'].Voltage }}"
-    qos: 2
-    unit_of_measurement : "V"
-    icon: mdi:flash-circle
-    availability_topic: "tele/pwrswitch2/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline" 
+#  - platform: mqtt
+#    name: "Ender3 Voltage"
+#    state_topic: "tele/pwrswitch2/SENSOR"
+#    value_template: "{{value_json['ENERGY'].Voltage }}"
+#    qos: 2
+#    unit_of_measurement : "V"
+#    icon: mdi:flash-circle
+#    availability_topic: "tele/pwrswitch2/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline" 
 
-  - platform: mqtt
-    name: "Ender3 Watts"
-    state_topic: "tele/pwrswitch2/SENSOR"
-    value_template: "{{value_json['ENERGY'].Power }}"
-    qos: 2
-    unit_of_measurement : "W"
-    icon: mdi:flash-circle
-    availability_topic: "tele/pwrswitch2/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
+#  - platform: mqtt
+#    name: "Ender3 Watts"
+#    state_topic: "tele/pwrswitch2/SENSOR"
+#    value_template: "{{value_json['ENERGY'].Power }}"
+#    qos: 2
+#    unit_of_measurement : "W"
+#    icon: mdi:flash-circle
+#    availability_topic: "tele/pwrswitch2/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
 
-  - platform: mqtt
-    name: "Ender3 Amps"
-    state_topic: "tele/pwrswitch2/SENSOR"
-    value_template: "{{value_json['ENERGY'].Current }}"
-    qos: 2
-    unit_of_measurement : "A"
-    icon: mdi:flash-circle
-    availability_topic: "tele/pwrswitch2/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
+#  - platform: mqtt
+#    name: "Ender3 Amps"
+#    state_topic: "tele/pwrswitch2/SENSOR"
+#    value_template: "{{value_json['ENERGY'].Current }}"
+#    qos: 2
+#    unit_of_measurement : "A"
+#    icon: mdi:flash-circle
+#    availability_topic: "tele/pwrswitch2/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
 
 #darksky
   - platform: darksky
@@ -393,36 +383,7 @@ sensor:
     qos: 0
     unit_of_measurement: "%"    
 
-#pollen sensor
-  - platform: pollen
-    zip_code: "65010"
-    monitored_conditions:
-      - allergy_average_forecasted
-      - allergy_index_today
-      - allergy_index_yesterday
-      - disease_average_forecasted
-
-#pihole sensor
-  - platform: pi_hole
-    host: 192.168.101.31
-    monitored_conditions:
-      - ads_blocked_today
-      - ads_percentage_today
-      - dns_queries_today
-      - domains_being_blocked
-      - queries_cached
-      - queries_forwarded
-      - unique_clients
-      - unique_domains
-      - clients_ever_seen
-
   - platform: yr
-
-#rest sensor for water softener salt level
-  - platform: rest
-    name: Salt Level
-    resource: http://192.168.100.73
-    scan_interval: 300
 
 #whats starmans status?
   - platform: rest
@@ -554,7 +515,6 @@ sensor:
         friendly_name: 'Mission'
         value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
 
-#friendly time view for octoprint status
   - platform: template
     sensors:
       ender3_time_elapsed_friendly:
@@ -577,8 +537,8 @@ binary_sensor:
 
 #salt water level above or below threshold.
   - platform: threshold
-    entity_id: sensor.salt_level
-    upper: 30
+    entity_id: sensor.salt_water_level
+    upper: 0.5
     name: "Salt Level Threshold"
 
 #freezer temp above threshold
@@ -590,7 +550,7 @@ binary_sensor:
 ##homesystemmonitors
 #sensor for loadbalancer
   - platform: ping
-    host: 192.168.101.23
+    host: 192.168.101.27
     name: Loadbalancer
 
 #sensor for challenger
@@ -607,11 +567,6 @@ binary_sensor:
   - platform: ping
     host: 192.168.100.61
     name: wemos_freezer
-
-#sensor for salt wemos
-  - platform: ping
-    host: 192.168.100.73
-    name: wemos_salt
 
 #sensor for pwrswitch1 for ender 3
   - platform: ping
@@ -751,49 +706,38 @@ alert:
     notifiers:
       - iosapp
       
-#alert if wemossaltmonitor goes down
-  wemos_salt_isdown:
-    name: wemos_salt is Down
-    done_message: wemos_salt is Up
-    entity_id: binary_sensor.wemos_salt
-    state: 'off'
-    repeat: 240
-    can_acknowledge: True
-    notifiers:
-      - iosapp
-
 #alert if pwrswitch1 goes down
-  pwrswitch1_isdown:
-    name: pwrswitch1 is Down
-    done_message: pwrswitch1 is Up
-    entity_id: binary_sensor.pwrswitch1
-    state: 'off'
-    repeat: 240
-    can_acknowledge: True
-    notifiers:
-      - iosapp     
+#  pwrswitch1_isdown:
+#    name: pwrswitch1 is Down
+#    done_message: pwrswitch1 is Up
+#    entity_id: binary_sensor.pwrswitch1
+#    state: 'off'
+#    repeat: 240
+#    can_acknowledge: True
+#    notifiers:
+#      - iosapp     
 
 #alert if octopi goes down
-  octopi_isdown:
-    name: octopi is Down
-    done_message: octopi is Up
-    entity_id: binary_sensor.octopi
-    state: 'off'
-    repeat: 240
-    can_acknowledge: True
-    notifiers:
-      - iosapp             
+#  octopi_isdown:
+#    name: octopi is Down
+#    done_message: octopi is Up
+#    entity_id: binary_sensor.octopi
+#    state: 'off'
+#    repeat: 240
+#    can_acknowledge: True
+#    notifiers:
+#      - iosapp             
 
 #Tell me when octoprint is done
-  printisdone:
-    name: Print is Done
-    done_message: Printing has Started
-    entity_id: binary_sensor.octoprint_printing
-    state: 'off'
-    repeat: 1440
-    can_acknowledge: True
-    notifiers:
-      - iosapp
+#  printisdone:
+#    name: Print is Done
+#    done_message: Printing has Started
+#    entity_id: binary_sensor.octoprint_printing
+#    state: 'off'
+#    repeat: 1440
+#    can_acknowledge: True
+#    notifiers:
+#      - iosapp
 
 #turn the outside lights on during evening to 50%
 scene:
