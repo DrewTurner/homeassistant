@@ -13,8 +13,31 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+  auth_providers:
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.0.0/16
+
 stream:
 
+mobile_app:
+
+#setting up mikrotik device tracker
+mikrotik:
+  - host: !secret mikrotikrouter
+    username: !secret hamikrotikuser
+    password: !secret hamikrotikpass
+    login_method: plain
+    arp_ping: true
+
+device_tracker:
+  - platform: mikrotik
+    interval_seconds: 30
+    consider_home: 180
+    new_device_defaults:
+      track_new_devices: false
+      
 #setting up ios notifications
 #dt 1/1/2018
 ios:
@@ -90,11 +113,11 @@ http:
 # Secrets are defined in the file secrets.yaml
 # force password
 #dt 12/28/2017
-    api_password: !secret http_password
-    use_x_forwarded_for: true
-    trusted_proxies: !secret trusted_proxy
+#    api_password: !secret http_password
+#  use_x_forwarded_for: true
+#    trusted_proxies: !secret trusted_proxy
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-    base_url: !secret http_base_url
+  base_url: !secret http_base_url
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -110,6 +133,11 @@ discovery:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
+
+#set maximum days for db growth
+recorder:
+  purge_keep_days: 10
+  purge_interval: 1
 
 # Enables support for tracking state changes over time
 history:
@@ -191,28 +219,10 @@ input_select:
 #switch
 #christmas lights girls trees
 switch:
-  - platform: mqtt
-    name: "Christmas Lights"
-    command_topic: "cmnd/sonoff/power"
-    state_topic: "stat/sonoff/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: true
-
-#christmas lights main tree
-  - platform: mqtt
-    name: "Christmas Tree Lights"
-    command_topic: "cmnd/christmastreelights/power"
-    state_topic: "stat/christmastreelights/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: true
 
 #pwrswitch1
   - platform: mqtt
-    name: "Turkey_Light"
+    name: "PowerSwitch1"
     command_topic: "cmnd/pwrswitch1/power"
     state_topic: "stat/pwrswitch1/POWER"
     qos: 1
@@ -300,45 +310,6 @@ sensor:
       - icon
       - temperature
       
-#Waze!
-#general where am I to locations:
-  - platform: waze_travel_time
-    name: "Travel from Current Location to Home"
-    origin: device_tracker.foehammer
-    destination: !secret home_address
-    region: 'US'
-  - platform: waze_travel_time
-    name: "Travel from Current Location to Work"
-    origin: device_tracker.foehammer
-    destination: !secret work_address
-    region: 'US'
-
-#Dropping off the Girls
-  - platform: waze_travel_time
-    name: "Travel from Current Location to DayCare"
-    origin: device_tracker.foehammer
-    destination: !secret daycare_address
-    region: 'US'
-
-  - platform: waze_travel_time
-    name: "Travel from Daycare to Work"
-    origin: !secret daycare_address
-    destination: !secret work_address
-    region: 'US'
-
-#Picking Up the Girls
-  - platform: waze_travel_time
-    name: "Travel from Work to Daycare"
-    origin: !secret work_address
-    destination: !secret daycare_address
-    region: 'US'
-
-  - platform: waze_travel_time
-    name: "Travel from Daycare to Home"
-    origin: !secret daycare_address
-    destination: !secret home_address
-    region: 'US'
-
 #homeassistant platform monitor
   - platform: systemmonitor
     resources:
@@ -560,7 +531,7 @@ binary_sensor:
 
 #sensor for ubiquiticontroller
   - platform: ping
-    host: 192.168.101.35
+    host: 192.168.101.36
     name: UbiquitiController
 
 #sensor for freezer wemos

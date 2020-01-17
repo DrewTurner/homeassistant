@@ -155,7 +155,7 @@
       entity_id: switch.rocketclock_daylight_2
     service: switch.turn_off
 - id: '1574043468949'
-  alias: TurnTurkeyOn
+  alias: TurnChristmasOn
   trigger:
   - at: 06:45
     platform: time
@@ -163,24 +163,24 @@
     platform: time
   condition:
   - condition: state
-    entity_id: switch.turkey_light
+    entity_id: switch.christmastree1lights
     state: 'off'
   action:
   - data:
-      entity_id: switch.turkey_light
+      entity_id: switch.christmastree1lights
     service: switch.turn_on
 - id: '1574043842266'
-  alias: TurnTurkeyOff
+  alias: TurnChristmasOff
   trigger:
   - at: 07:45
     platform: time
-  - at: '21:00'
+  - at: '22:45'
     platform: time
   condition:
   - condition: state
-    entity_id: switch.turkey_light
+    entity_id: switch.christmastree1lights
     state: 'on'
   action:
   - data:
-      entity_id: switch.turkey_light
+      entity_id: switch.christmastree1lights
     service: switch.turn_off
