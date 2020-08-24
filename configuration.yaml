@@ -23,31 +23,26 @@ stream:
 
 mobile_app:
 
+default_config:
+
 #setting up mikrotik device tracker
 mikrotik:
-  - host: !secret mikrotikrouter
-    username: !secret hamikrotikuser
-    password: !secret hamikrotikpass
-    login_method: plain
-    arp_ping: true
+  name: Mikrotik
+  host: !secret mikrotikrouter
+  username: !secret hamikrotikuser
+  password: !secret hamikrotikpass
+  arp_ping: true
 
-device_tracker:
-  - platform: mikrotik
-    interval_seconds: 30
-    consider_home: 180
-    new_device_defaults:
-      track_new_devices: false
+#device_tracker:
+#  - platform: mikrotik
+#    interval_seconds: 30
+#    consider_home: 180
+#    new_device_defaults:
+#      track_new_devices: false
       
 #setting up ios notifications
 #dt 1/1/2018
 ios:
-
-#setup a notify app
-#dt 1/1/2018
-notify:
- - platform: ios
-   name: iOSApp
-   target: !secret ios_target_id
 
 #setting up nvr access
 camera:
@@ -84,11 +79,6 @@ octoprint:
   host: !secret octoprinthostip
   api_key: !secret octoprintapikey
   bed: true
-
-#setup ring
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
 
 #setup zwave and secure zwave
 #dt 1/4/2018
@@ -220,6 +210,9 @@ input_select:
 #christmas lights girls trees
 switch:
 
+#  - platform: switchmate
+#    mac: d8:1d:07:da:15:da
+    
 #pwrswitch1
   - platform: mqtt
     name: "PowerSwitch1"
@@ -232,6 +225,7 @@ switch:
 #pwrswitch2
   - platform: mqtt
     name: "Ender 3 Power"
+    unique_id: "Ender 3 Power"
     command_topic: "cmnd/pwrswitch2/power"
     state_topic: "stat/pwrswitch2/POWER"
     qos: 1
@@ -247,13 +241,7 @@ weather:
     mode: daily
     latitude: !secret latitude
     longitude: !secret longitude
-    
-#pihole sensor
-# Example configuration.yaml entry
-pi_hole:
-  host: 192.168.101.31
-  ssl: false
-  verify_ssl: false
+
 
 #speedtest
 speedtestdotnet:
@@ -328,19 +316,6 @@ sensor:
     symbols:
     - symbol: VGT
       name: Vanguard Information Technology Index Fund
-
-#temp and humidity
-  - platform: mqtt
-    name: 'Freezer Temperature'
-    state_topic: 'home/freezer/temperature'
-    qos: 0
-    unit_of_measurement: "ºF"
-
-  - platform: mqtt
-    name: 'Freezer Humidity'
-    state_topic: 'home/freezer/humidity'
-    qos: 0
-    unit_of_measurement: "%"
 
   - platform: mqtt
     name: 'H&G Temperature'
@@ -495,9 +470,6 @@ sensor:
         friendly_name: "Ender 3 Time Remaining"
         value_template: "{{ states('sensor.octoprint_time_remaining') | int | timestamp_custom('%H:%M:%S', 0) }}"
 
-#ring platform
-  - platform: ring
-
 # Text to speech
 tts:
   - platform: google_translate
@@ -549,9 +521,6 @@ binary_sensor:
     host: 192.168.100.16
     name: octopi
 
-#binary_sensors for ring doorbell
-  - platform: ring
-
 #enable cast to chromecast
 cast:
   media_player:
@@ -561,7 +530,7 @@ cast:
 # Cloud
 cloud:
 
-group: !include groups.yaml
+#group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 
@@ -577,7 +546,7 @@ alert:
     repeat: 5
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
   deck_door:
     name: Deck Door is open
@@ -587,7 +556,7 @@ alert:
     repeat: 5
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
 #alert if front door has been opened
   front_door:
@@ -598,7 +567,7 @@ alert:
     repeat: 15
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
 #alerts if garage door has been open for more than 5 minutes.
   garage_door:
@@ -609,7 +578,7 @@ alert:
     repeat: 15
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
 #alert if salt needs to be replenished      
   replenish_salt:
@@ -620,7 +589,7 @@ alert:
     repeat: 1440
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
 #alert if freezer is not working      
   freezer_temp_alert:
@@ -631,7 +600,7 @@ alert:
     repeat: 15
     can_acknowledge: True
     notifiers:
-      - iosapp 
+      - mobile_app_foehammer 
 
 #alert if loadbalancer goes down
   loadbalancerisdown:
@@ -642,7 +611,7 @@ alert:
     repeat: 240
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
 #alert if challenger goes down
   challengerisdown:
@@ -653,7 +622,7 @@ alert:
     repeat: 240
     can_acknowledge: True
     notifiers:
-      - iosapp      
+      - mobile_app_foehammer      
 
 #alert if loadbalancer goes down
   ubiquiticontrollerisdown:
@@ -664,7 +633,7 @@ alert:
     repeat: 240
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
 
 #alert if freezer wemos goes down
   wemos_freezer_down:
@@ -675,7 +644,7 @@ alert:
     repeat: 240
     can_acknowledge: True
     notifiers:
-      - iosapp
+      - mobile_app_foehammer
       
 #alert if pwrswitch1 goes down
 #  pwrswitch1_isdown:
@@ -686,7 +655,7 @@ alert:
 #    repeat: 240
 #    can_acknowledge: True
 #    notifiers:
-#      - iosapp     
+#      - mobile_app_foehammer     
 
 #alert if octopi goes down
 #  octopi_isdown:
@@ -697,7 +666,7 @@ alert:
 #    repeat: 240
 #    can_acknowledge: True
 #    notifiers:
-#      - iosapp             
+#      - mobile_app_foehammer             
 
 #Tell me when octoprint is done
 #  printisdone:
@@ -708,7 +677,7 @@ alert:
 #    repeat: 1440
 #    can_acknowledge: True
 #    notifiers:
-#      - iosapp
+#      - mobile_app_foehammer
 
 #turn the outside lights on during evening to 50%
 scene:
@@ -779,7 +748,8 @@ cover:
           service: cover.close_cover
           data:
             entity_id: cover.single
-#logger:
-#  default: warning
-#  logs:
-#    homeassistant.components.mqtt: debug
+logger:
+  default: info
+  logs:
+    homeassistant.core: debug
+    homeassistant.components.mqtt: debug
